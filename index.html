@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI & Data Science Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: #0f0c29;
+      background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
+      color: white;
+      min-height: 100vh;
+    }
+
+    /* Header & Navigation */
+    header {
+      padding: 20px 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      background: rgba(15, 12, 41, 0.9);
+      backdrop-filter: blur(10px);
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #f72585;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 180px 40px 100px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      width: 100%;
+      gap: 50px;
+      margin: 0 auto;
+    }
+
+    .hero-content {
+      flex: 1;
+    }
+
+    .hero-content h3 {
+      font-size: 24px;
+      color: #ccc;
+    }
+
+    .hero-content h1 {
+      font-size: 48px;
+      color: #f72585;
+      margin: 10px 0;
+    }
+
+    .hero-content p {
+      margin: 20px 0;
+      max-width: 500px;
+      line-height: 1.6;
+      color: #ddd;
+    }
+
+    .skills {
+      margin: 20px 0;
+    }
+
+    .skills span {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 5px 15px;
+      border-radius: 20px;
+      margin-right: 10px;
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    .btn {
+      padding: 12px 25px;
+      background: linear-gradient(90deg, #6c63ff, #fc466b);
+      border: none;
+      color: white;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+      margin-right: 15px;
+      margin-top: 10px;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(252, 70, 107, 0.5);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid white;
+    }
+
+    .social-icons {
+      margin-top: 30px;
+      display: flex;
+      gap: 15px;
+    }
+
+    .social-icons a {
+      width: 50px;
+      height: 50px;
+      background: rgba(26, 26, 46, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      text-decoration: none;
+      color: white;
+      box-shadow: 0 0 15px rgba(247, 37, 133, 0.3);
+      transition: 0.3s;
+    }
+
+    .social-icons a:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 25px rgba(247, 37, 133, 0.5);
+    }
+
+    .hero-image {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-image img {
+      width: 350px;
+      height: 350px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 5px solid transparent;
+      box-shadow: 0 0 30px #f72585;
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 30px #f72585; }
+      50% { box-shadow: 0 0 60px #f72585; }
+      100% { box-shadow: 0 0 30px #f72585; }
+    }
+
+    /* Portfolio Showcase */
+    .showcase {
+      padding: 100px 40px;
+      background: rgba(10, 15, 44, 0.7);
+      text-align: center;
+    }
+
+    .showcase h2 {
+      color: #f72585;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    .showcase p {
+      max-width: 800px;
+      margin: 0 auto 40px;
+      color: #ccc;
+      line-height: 1.6;
+    }
+
+    .tabs {
+      margin: 30px 0;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: #ccc;
+      padding: 10px 25px;
+      margin: 0 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      border-radius: 30px;
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(90deg, #6c63ff, #fc466b);
+      color: white;
+      box-shadow: 0 0 15px rgba(252, 70, 107, 0.5);
+    }
+
+    .tab-content {
+      display: none;
+      margin-top: 40px;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Projects Grid */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      padding: 0 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .portfolio-item {
+      background: rgba(26, 26, 46, 0.7);
+      border-radius: 15px;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .portfolio-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(247, 37, 133, 0.3);
+    }
+
+    .portfolio-item img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .portfolio-content {
+      padding: 20px;
+    }
+
+    .portfolio-content h3 {
+      margin-bottom: 10px;
+      color: white;
+    }
+
+    .portfolio-content p {
+      color: #ccc;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+
+    .portfolio-item .hover-message {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+
+    .portfolio-item:hover .hover-message {
+      opacity: 1;
+    }
+
+    /* Certificates Grid */
+    .certificate-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      padding: 0 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .certificate-item {
+      background: rgba(26, 26, 46, 0.7);
+      border-radius: 15px;
+      overflow: hidden;
+      transition: transform 0.3s;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      position: relative;
+      cursor: pointer;
+    }
+
+    .certificate-item:hover {
+      transform: scale(1.05);
+    }
+
+    .certificate-item img {
+      width: 100%;
+      height: auto;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .certificate-item .cert-title {
+      padding: 15px;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    /* Certificate Viewer */
+    .certificate-viewer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .certificate-viewer.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .certificate-viewer img {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+    }
+
+    .close-viewer {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      background: #f72585;
+      color: white;
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .viewer-nav {
+      position: absolute;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 30px;
+    }
+
+    .viewer-nav button {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .viewer-nav button:hover {
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    .certificate-details {
+      position: absolute;
+      bottom: 30px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    .certificate-skills {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .certificate-skills span {
+      background: rgba(247, 37, 133, 0.2);
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 14px;
+    }
+
+    /* Skills Section */
+    .skills-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .skill-category {
+      background: rgba(26, 26, 46, 0.7);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .skill-category h3 {
+      color: #f72585;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .skill-item {
+      margin-bottom: 20px;
+    }
+
+    .skill-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .skill-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 15px;
+    }
+
+    .skill-icon img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .skill-name {
+      flex: 1;
+    }
+
+    .skill-percent {
+      font-weight: bold;
+      color: #f72585;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #6c63ff, #fc466b);
+      border-radius: 4px;
+      transition: width 1s ease-in-out;
+    }
+
+    .skill-description {
+      font-size: 12px;
+      color: #aaa;
+      margin-top: 5px;
+    }
+
+    /* Add Buttons */
+    .add-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 50px;
+      height: 50px;
+      background: #f72585;
+      color: white;
+      border-radius: 50%;
+      position: fixed;
+      bottom: 100px;
+      right: 30px;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(247, 37, 133, 0.5);
+      z-index: 1000;
+      transition: transform 0.3s;
+    }
+
+    .add-button:hover {
+      transform: scale(1.1);
+    }
+
+    /* Add Modal */
+    .add-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 2000;
+      overflow-y: auto;
+      padding: 40px;
+    }
+
+    .add-modal-content {
+      background: #1a1a2e;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 30px rgba(247, 37, 133, 0.3);
+    }
+
+    .add-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .add-modal-header h2 {
+      color: #f72585;
+    }
+
+    .close-add-modal {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .add-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .add-form-group {
+      margin-bottom: 15px;
+    }
+
+    .add-form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #ccc;
+    }
+
+    .add-form-group input,
+    .add-form-group textarea,
+    .add-form-group select {
+      width: 100%;
+      padding: 10px 15px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 5px;
+      color: white;
+    }
+
+    .add-form-group textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .save-add-item {
+      background: linear-gradient(90deg, #6c63ff, #fc466b);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 20px;
+      transition: transform 0.3s;
+    }
+
+    .save-add-item:hover {
+      transform: scale(1.02);
+    }
+
+    /* Experience Section */
+    .experience-section {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px;
+    }
+
+    .experience-item {
+      background: rgba(26, 26, 46, 0.7);
+      border-radius: 15px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .experience-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+
+    .experience-title {
+      font-size: 1.2rem;
+      color: #f72585;
+    }
+
+    .experience-date {
+      color: #ccc;
+    }
+
+    .experience-company {
+      font-weight: 500;
+      margin-bottom: 15px;
+    }
+
+    .experience-description {
+      color: #ddd;
+      line-height: 1.6;
+    }
+
+    .experience-description ul {
+      margin-left: 20px;
+      margin-top: 10px;
+    }
+
+    .experience-description li {
+      margin-bottom: 8px;
+    }
+
+    /* Footer */
+    footer {
+      background: #050517;
+      padding: 60px 40px 30px;
+      text-align: center;
+    }
+
+    .footer-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto 40px;
+    }
+
+    .footer-col {
+      flex: 1;
+      min-width: 250px;
+      margin-bottom: 30px;
+      padding: 0 20px;
+    }
+
+    .footer-col h4 {
+      color: #f72585;
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+    }
+
+    .footer-col p, .footer-col a {
+      color: #ccc;
+      margin: 8px 0;
+      display: block;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-col a:hover {
+      color: #f72585;
+    }
+
+    .footer-bottom {
+      font-size: 0.9rem;
+      color: #777;
+      margin-top: 40px;
+      line-height: 1.6;
+    }
+
+    /* Edit Button */
+    .edit-button {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #f72585;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 12px 25px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 0 20px rgba(247, 37, 133, 0.5);
+      z-index: 1000;
+      transition: transform 0.3s;
+    }
+
+    .edit-button:hover {
+      transform: scale(1.05);
+    }
+
+    /* Edit Modal */
+    .edit-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 2000;
+      overflow-y: auto;
+      padding: 40px;
+    }
+
+    .modal-content {
+      background: #1a1a2e;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 30px rgba(247, 37, 133, 0.3);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .modal-header h2 {
+      color: #f72585;
+    }
+
+    .close-modal {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .edit-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #ccc;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 10px 15px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 5px;
+      color: white;
+    }
+
+    .form-group textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    .save-changes {
+      grid-column: 1 / -1;
+      background: linear-gradient(90deg, #6c63ff, #fc466b);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 20px;
+      transition: transform 0.3s;
+    }
+
+    .save-changes:hover {
+      transform: scale(1.02);
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
+        padding-top: 150px;
+      }
+
+      .hero-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .hero-image {
+        margin-top: 50px;
+      }
+
+      .hero-image img {
+        width: 250px;
+        height: 250px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 15px 20px;
+      }
+
+      nav {
+        display: none;
+      }
+
+      .edit-form {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-content h1 {
+        font-size: 36px;
+      }
+
+      .skills-section {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo" id="logo">AI Portfolio</div>
+    <nav>
+      <a href="#home" class="nav-link">Home</a>
+      <a href="#portfolio" class="nav-link">Portfolio</a>
+      <a href="#experience" class="nav-link">Experience</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h3 id="greeting">Hello, I'm</h3>
+      <h1 id="name">AI & Data Science Specialist</h1>
+      <h3 id="title">Machine Learning Engineer | Data Scientist</h3>
+      <p id="description">Innovative and self-motivated AI & Data Science graduate with a passion for machine learning, artificial intelligence, and big data analytics. Proficient in Python, SQL, MongoDB, and Apache Spark.</p>
+      
+      <div class="skills" id="skills-container">
+        <span>Python</span>
+        <span>SQL</span>
+        <span>MongoDB</span>
+        <span>Apache Spark</span>
+        <span>Machine Learning</span>
+      </div>
+      
+      <div>
+        <button class="btn" id="contact-btn">Contact Me →</button>
+        <button class="btn btn-outline" id="download-cv">Download CV</button>
+      </div>
+      
+      <div class="social-icons">
+        <a href="#" target="_blank" id="github-link"><i class="fab fa-github"></i></a>
+        <a href="#" target="_blank" id="linkedin-link"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" target="_blank" id="coursera-link"><i class="fas fa-graduation-cap"></i></a>
+      </div>
+    </div>
+    
+    <div class="hero-image">
+      <img src="https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="AI Specialist" id="profile-image">
+    </div>
+  </section>
+
+  <!-- Portfolio Showcase -->
+  <section class="showcase" id="portfolio">
+    <h2 id="showcase-title">Portfolio Showcase</h2>
+    <p id="showcase-description">Explore my journey through projects, certificates, and technical expertise. Each section represents a milestone in my continuous learning path.</p>
+    
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="projects">Projects</button>
+      <button class="tab-btn" data-tab="certificates">Certificates</button>
+      <button class="tab-btn" data-tab="skills">My Skills</button>
+    </div>
+    
+    <!-- Projects Tab -->
+    <div class="tab-content active" id="projects-tab">
+      <div class="portfolio-grid" id="projects-container">
+        <div class="portfolio-item">
+          <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=765&q=80" alt="NeuroGenix">
+          <div class="hover-message">Click to view details</div>
+          <div class="portfolio-content">
+            <h3>NeuroGenix AI</h3>
+            <p>Genetic Sequence Analyzer that uses machine learning to identify patterns in genomic data.</p>
+            <button class="btn" style="padding: 8px 15px; font-size: 0.9rem;">Live Demo</button>
+          </div>
+        </div>
+        
+        <div class="portfolio-item">
+          <img src="https://images.unsplash.com/photo-1586339949916-3e9457bef6d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Briefeek AI">
+          <div class="hover-message">Click to view details</div>
+          <div class="portfolio-content">
+            <h3>Briefeek AI</h3>
+            <p>Personalized News Aggregator that curates content based on user preferences using NLP.</p>
+            <button class="btn" style="padding: 8px 15px; font-size: 0.9rem;">Live Demo</button>
+          </div>
+        </div>
+        
+        <div class="portfolio-item">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="HireGuard AI">
+          <div class="hover-message">Click to view details</div>
+          <div class="portfolio-content">
+            <h3>HireGuard AI</h3>
+            <p>Fraudulent Job Posting Detector that analyzes job listings for potential scams.</p>
+            <button class="btn" style="padding: 8px 15px; font-size: 0.9rem;">Live Demo</button>
+          </div>
+        </div>
+        
+        <div class="portfolio-item">
+          <img src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="FeelFrame AI">
+          <div class="hover-message">Click to view details</div>
+          <div class="portfolio-content">
+            <h3>FeelFrame AI</h3>
+            <p>Text to Video Generator that creates engaging videos from written content.</p>
+            <button class="btn" style="padding: 8px 15px; font-size: 0.9rem;">Live Demo</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Certificates Tab -->
+    <div class="tab-content" id="certificates-tab">
+      <div class="tabs">
+        <button class="tab-btn active" data-cert-tab="data-analytics">Data Analytics</button>
+        <button class="tab-btn" data-cert-tab="data-structures">Data Structures</button>
+        <button class="tab-btn" data-cert-tab="genomics">Genomic Data</button>
+        <button class="tab-btn" data-cert-tab="mongodb">MongoDB</button>
+        <button class="tab-btn" data-cert-tab="sql">SQL</button>
+      </div>
+      
+      <div class="certificate-grid" id="certificates-container">
+        <!-- Data Analytics Certificates -->
+        <div class="certificate-item" data-cert="data-analytics">
+          <img src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Data Analytics Certificate 1">
+          <div class="cert-title">Google Data Analytics 1</div>
+        </div>
+        
+        <div class="certificate-item" data-cert="data-analytics">
+          <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Data Analytics Certificate 2">
+          <div class="cert-title">Google Data Analytics 2</div>
+        </div>
+        
+        <!-- Data Structures Certificates -->
+        <div class="certificate-item" data-cert="data-structures">
+          <img src="https://images.unsplash.com/photo-1531545514256-b1400bc00f31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Data Structures Certificate 1">
+          <div class="cert-title">UC San Diego DSA 1</div>
+        </div>
+        
+        <div class="certificate-item" data-cert="data-structures">
+          <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Data Structures Certificate 2">
+          <div class="cert-title">UC San Diego DSA 2</div>
+        </div>
+        
+        <!-- Genomic Data Certificates -->
+        <div class="certificate-item" data-cert="genomics">
+          <img src="https://images.unsplash.com/photo-1581094271901-8022df4466f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Genomic Data Certificate 1">
+          <div class="cert-title">JHU Genomics 1</div>
+        </div>
+        
+        <!-- MongoDB Certificate -->
+        <div class="certificate-item" data-cert="mongodb">
+          <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80" alt="MongoDB Certificate">
+          <div class="cert-title">MongoDB Python Developer</div>
+        </div>
+        
+        <!-- SQL Certificates -->
+        <div class="certificate-item" data-cert="sql">
+          <img src="https://images.unsplash.com/photo-1605731414532-6b26952cc152?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="SQL Certificate 1">
+          <div class="cert-title">SQL Basics 1</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Skills Tab -->
+    <div class="tab-content" id="skills-tab">
+      <div class="skills-section">
+        <div class="skill-category">
+          <h3>Programming Languages</h3>
+          
+          <div class="skill-item">
+            <div class="skill-header">
+              <div class="skill-icon">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
+              </div>
+              <div class="skill-name">Python</div>
+              <div class="skill-percent">95%</div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 95%"></div>
+            </div>
+            <div class="skill-description">Used in machine learning projects, data analysis, and automation scripts.</div>
+          </div>
+          
+          <div class="skill-item">
+            <div class="skill-header">
+              <div class="skill-icon">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript">
+              </div>
+              <div class="skill-name">JavaScript</div>
+              <div class="skill-percent">85%</div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 85%"></div>
+            </div>
+            <div class="skill-description">Used for web development and interactive data visualizations.</div>
+          </div>
+          
+          <div class="skill-item">
+            <div class="skill-header">
+              <div class="skill-icon">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" alt="C">
+              </div>
+              <div class="skill-name">C</div>
+              <div class="skill-percent">80%</div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 80%"></div>
+            </div>
+            <div class="skill-description">Used for system programming and algorithm implementations.</div>
+          </div>
+        </div>
+        
+        <div class="skill-category">
+          <h3>Databases</h3>
+          
+          <div class="skill-item">
+            <div class="skill-header">
+              <div class="skill-icon">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB">
+              </div>
+              <div class="skill-name">MongoDB</div>
+              <div class="skill-percent">90%</div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 90%"></div>
+            </div>
+            <div class="skill-description">Used for storing and querying large datasets in AI projects.</div>
+          </div>
+          
+          <div class="skill-item">
+            <div class="skill-header">
+              <div class="skill-icon">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="SQL">
+              </div>
+              <div class="skill-name">SQL</div>
+              <div class="skill-percent">88%</div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 88%"></div>
+            </div>
+            <div class="skill-description">Used for data analysis and business intelligence reporting.</div>
+          </div>
+        </div>
+        
+        <div class="skill-category">
+          <h3>Tools & Frameworks</h3>
+          
+          <div class="skill-item">
+            <div class="skill-header">
+              <div class="skill-icon">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" alt="Pandas">
+              </div>
+              <div class="skill-name">Pandas</div>
+              <div class="skill-percent">92%</div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 92%"></div>
+            </div>
+            <div class="skill-description">Used for data manipulation and analysis in Python.</div>
+          </div>
+          
+          <div class="skill-item">
+            <div class="skill-header">
+              <div class="skill-icon">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apache/apache-original.svg" alt="Apache Spark">
+              </div>
+              <div class="skill-name">Apache Spark</div>
+              <div class="skill-percent">85%</div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 85%"></div>
+            </div>
+            <div class="skill-description">Used for big data processing and distributed computing.</div>
+          </div>
+          
+          <div class="skill-item">
+            <div class="skill-header">
+              <div class="skill-icon">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch">
+              </div>
+              <div class="skill-name">PyTorch</div>
+              <div class="skill-percent">87%</div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 87%"></div>
+            </div>
+            <div class="skill-description">Used for deep learning and neural network implementations.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience Section -->
+  <section class="experience-section" id="experience">
+    <h2 style="text-align: center; color: #f72585; font-size: 2.5rem; margin-bottom: 40px;">Professional Experience</h2>
+    
+    <div class="experience-item">
+      <div class="experience-header">
+        <div class="experience-title">Team & Project Head</div>
+        <div class="experience-date">10/2024 - 11/2024</div>
+      </div>
+      <div class="experience-company">STYLE CRAFT AI | BUILDERS ENGINEERING COLLEGE</div>
+      <div class="experience-description">
+        <p>Presenting the project in government hackathon:</p>
+        <ul>
+          <li>Led a 6-member team as Team & Project Head in the Smart India Hackathon, managing end-to-end planning, technical execution, and team coordination for an AI-based solution</li>
+          <li>Identified key pain points in fashion personalization and built a scalable AI solution Style Craft AI using adaptive workflows and feedback-driven improvement</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="experience-item">
+      <div class="experience-header">
+        <div class="experience-title">Event Architect</div>
+        <div class="experience-date">3/2025</div>
+      </div>
+      <div class="experience-company">TECH ESCAPE | BUILDERS ENGINEERING COLLEGE</div>
+      <div class="experience-description">
+        <p>Conduct event in the college symposium:</p>
+        <ul>
+          <li>Served as Event Architect for TECH ESCAPE, managing the full lifecycle of the event from concept and design to technical deployment and execution</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="experience-item">
+      <div class="experience-header">
+        <div class="experience-title">Education</div>
+        <div class="experience-date">2021 - 2025</div>
+      </div>
+      <div class="experience-company">Bachelor of Technology in Artificial Intelligence & Data Science</div>
+      <div class="experience-description">
+        <p>BUILDERS ENGINEERING COLLEGE | CGPA: 7.71 (upto 6th sem)</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="contact">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Contact Info</h4>
+        <p><i class="fas fa-envelope"></i> <span id="footer-email">ai.specialist@example.com</span></p>
+        <p><i class="fas fa-phone"></i> <span id="footer-phone">+123-456-7890</span></p>
+      </div>
+      
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <a href="#home">Home</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#experience">Experience</a>
+        <a href="#contact">Contact</a>
+      </div>
+      
+      <div class="footer-col">
+        <h4>Follow Me</h4>
+        <a href="#" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+        <a href="#" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+        <a href="#" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>© 2025 AI Portfolio. All rights reserved.</p>
+      <p>Powered by AI and Data Science</p>
+    </div>
+  </footer>
+
+  <!-- Certificate Viewer -->
+  <div class="certificate-viewer" id="certificate-viewer">
+    <button class="close-viewer" id="close-viewer">&times;</button>
+    <div class="viewer-nav">
+      <button id="prev-cert"><i class="fas fa-chevron-left"></i></button>
+      <button id="next-cert"><i class="fas fa-chevron-right"></i></button>
+    </div>
+    <img id="viewer-image" src="" alt="Certificate">
+    <div class="certificate-details">
+      <h3 id="cert-viewer-title">Certificate Title</h3>
+      <div class="certificate-skills" id="cert-skills">
+        <span>Python</span>
+        <span>Data Analysis</span>
+        <span>Machine Learning</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Button -->
+  <div class="add-button" id="add-button">
+    <i class="fas fa-plus"></i>
+  </div>
+
+  <!-- Add Modal -->
+  <div class="add-modal" id="add-modal">
+    <div class="add-modal-content">
+      <div class="add-modal-header">
+        <h2 id="add-modal-title">Add New Item</h2>
+        <button class="close-add-modal" id="close-add-modal">&times;</button>
+      </div>
+      
+      <div class="tabs">
+        <button class="tab-btn active" data-add-type="project">Project</button>
+        <button class="tab-btn" data-add-type="certificate">Certificate</button>
+        <button class="tab-btn" data-add-type="skill">Skill</button>
+      </div>
+      
+      <form class="add-form" id="add-form">
+        <div class="add-form-group" id="add-project-fields">
+          <label for="project-title">Project Title</label>
+          <input type="text" id="project-title" placeholder="Enter project title">
+          
+          <label for="project-description">Description</label>
+          <textarea id="project-description" placeholder="Enter project description"></textarea>
+          
+          <label for="project-image">Image URL</label>
+          <input type="text" id="project-image" placeholder="Enter image URL">
+          
+          <label for="project-demo">Demo URL</label>
+          <input type="text" id="project-demo" placeholder="Enter live demo URL">
+        </div>
+        
+        <div class="add-form-group" id="add-certificate-fields" style="display: none;">
+          <label for="certificate-title">Certificate Title</label>
+          <input type="text" id="certificate-title" placeholder="Enter certificate title">
+          
+          <label for="certificate-image">Image URL</label>
+          <input type="text" id="certificate-image" placeholder="Enter image URL">
+          
+          <label for="certificate-category">Category</label>
+          <select id="certificate-category">
+            <option value="data-analytics">Data Analytics</option>
+            <option value="data-structures">Data Structures</option>
+            <option value="genomics">Genomic Data</option>
+            <option value="mongodb">MongoDB</option>
+            <option value="sql">SQL</option>
+          </select>
+          
+          <label for="certificate-skills">Skills Gained (comma separated)</label>
+          <input type="text" id="certificate-skills" placeholder="Python, Data Analysis, etc.">
+        </div>
+        
+        <div class="add-form-group" id="add-skill-fields" style="display: none;">
+          <label for="skill-name">Skill Name</label>
+          <input type="text" id="skill-name" placeholder="Enter skill name">
+          
+          <label for="skill-percent">Skill Percentage</label>
+          <input type="number" id="skill-percent" min="0" max="100" placeholder="Enter percentage (0-100)">
+          
+          <label for="skill-category">Category</label>
+          <select id="skill-category">
+            <option value="programming">Programming Languages</option>
+            <option value="databases">Databases</option>
+            <option value="tools">Tools & Frameworks</option>
+          </select>
+          
+          <label for="skill-description">Description</label>
+          <textarea id="skill-description" placeholder="Enter skill description"></textarea>
+          
+          <label for="skill-icon">Icon URL</label>
+          <input type="text" id="skill-icon" placeholder="Enter icon URL">
+        </div>
+        
+        <button type="submit" class="save-add-item">Save Item</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Edit Button -->
+  <button class="edit-button" id="edit-button">Edit Content</button>
+
+  <!-- Edit Modal -->
+  <div class="edit-modal" id="edit-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Edit Website Content</h2>
+        <button class="close-modal" id="close-modal">&times;</button>
+      </div>
+      
+      <form class="edit-form" id="edit-form">
+        <div class="form-group">
+          <label for="edit-logo">Logo Text</label>
+          <input type="text" id="edit-logo" value="AI Portfolio">
+        </div>
+        
+        <div class="form-group">
+          <label for="edit-greeting">Greeting Text</label>
+          <input type="text" id="edit-greeting" value="Hello, I'm">
+        </div>
+        
+        <div class="form-group">
+          <label for="edit-name">Your Name</label>
+          <input type="text" id="edit-name" value="AI & Data Science Specialist">
+        </div>
+        
+        <div class="form-group">
+          <label for="edit-title">Your Title</label>
+          <input type="text" id="edit-title" value="Machine Learning Engineer | Data Scientist">
+        </div>
+        
+        <div class="form-group full-width">
+          <label for="edit-description">Description</label>
+          <textarea id="edit-description">Innovative and self-motivated AI & Data Science graduate with a passion for machine learning, artificial intelligence, and big data analytics. Proficient in Python, SQL, MongoDB, and Apache Spark.</textarea>
+        </div>
+        
+        <div class="form-group full-width">
+          <label for="edit-skills">Skills (comma separated)</label>
+          <input type="text" id="edit-skills" value="Python, SQL, MongoDB, Apache Spark, Machine Learning">
+        </div>
+        
+        <div class="form-group">
+          <label for="edit-contact-btn">Contact Button Text</label>
+          <input type="text" id="edit-contact-btn" value="Contact Me →">
+        </div>
+        
+        <div class="form-group">
+          <label for="edit-cv-btn">CV Button Text</label>
+          <input type="text" id="edit-cv-btn" value="Download CV">
+        </div>
+        
+        <div class="form-group">
+          <label for="edit-github">GitHub Link</label>
+          <input type="text" id="edit-github" value="#">
+        </div>
+        
+        <div class="form-group">
+          <label for="edit-linkedin">LinkedIn Link</label>
+          <input type="text" id="edit-linkedin" value="#">
+        </div>
+        
+        <div class="form-group">
+          <label for="edit-coursera">Coursera Link</label>
+          <input type="text" id="edit-coursera" value="#">
+        </div>
+        
+        <div class="form-group full-width">
+          <label for="edit-showcase-title">Showcase Title</label>
+          <input type="text" id="edit-showcase-title" value="Portfolio Showcase">
+        </div>
+        
+        <div class="form-group full-width">
+          <label for="edit-showcase-desc">Showcase Description</label>
+          <textarea id="edit-showcase-desc">Explore my journey through projects, certificates, and technical expertise. Each section represents a milestone in my continuous learning path.</textarea>
+        </div>
+        
+        <div class="form-group">
+          <label for="edit-footer-email">Footer Email</label>
+          <input type="text" id="edit-footer-email" value="ai.specialist@example.com">
+        </div>
+        
+        <div class="form-group">
+          <label for="edit-footer-phone">Footer Phone</label>
+          <input type="text" id="edit-footer-phone" value="+123-456-7890">
+        </div>
+        
+        <div class="form-group full-width">
+          <label for="edit-profile-image">Profile Image URL</label>
+          <input type="text" id="edit-profile-image" value="https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80">
+        </div>
+        
+        <button type="submit" class="save-changes">Save Changes</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Tab functionality
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tabId = btn.getAttribute('data-tab');
+        
+        // Remove active class from all buttons and contents
+        tabBtns.forEach(btn => btn.classList.remove('active'));
+        tabContents.forEach(content => content.classList.remove('active'));
+        
+        // Add active class to clicked button and corresponding content
+        btn.classList.add('active');
+        document.getElementById(`${tabId}-tab`).classList.add('active');
+      });
+    });
+    
+    // Certificate tab functionality
+    const certTabBtns = document.querySelectorAll('[data-cert-tab]');
+    const certItems = document.querySelectorAll('.certificate-item');
+    
+    certTabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const certTab = btn.getAttribute('data-cert-tab');
+        
+        // Remove active class from all buttons
+        certTabBtns.forEach(btn => btn.classList.remove('active'));
+        
+        // Add active class to clicked button
+        btn.classList.add('active');
+        
+        // Show/hide certificate items
+        certItems.forEach(item => {
+          if (certTab === 'all' || item.getAttribute('data-cert') === certTab) {
+            item.style.display = 'block';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+    
+    // Certificate viewer functionality
+    const certificateItems = document.querySelectorAll('.certificate-item');
+    const certificateViewer = document.getElementById('certificate-viewer');
+    const viewerImage = document.getElementById('viewer-image');
+    const certViewerTitle = document.getElementById('cert-viewer-title');
+    const certSkills = document.getElementById('cert-skills');
+    const closeViewer = document.getElementById('close-viewer');
+    const prevCert = document.getElementById('prev-cert');
+    const nextCert = document.getElementById('next-cert');
+    
+    let currentCertIndex = 0;
+    const visibleCertificates = [];
+    
+    certificateItems.forEach((item, index) => {
+      item.addEventListener('click', () => {
+        const img = item.querySelector('img');
+        const title = item.querySelector('.cert-title').textContent;
+        
+        // Get all visible certificates
+        visibleCertificates.length = 0;
+        document.querySelectorAll('.certificate-item[style="display: block;"], .certificate-item:not([style])').forEach(visibleItem => {
+          visibleCertificates.push(visibleItem);
+        });
+        
+        // Find the index of the clicked certificate in visible certificates
+        currentCertIndex = Array.from(visibleCertificates).indexOf(item);
+        
+        // Update viewer
+        viewerImage.src = img.src;
+        certViewerTitle.textContent = title;
+        
+        // Update skills (this would be dynamic in a real app)
+        certSkills.innerHTML = '';
+        const skills = ['Python', 'Data Analysis', 'Machine Learning']; // Default skills
+        skills.forEach(skill => {
+          const span = document.createElement('span');
+          span.textContent = skill;
+          certSkills.appendChild(span);
+        });
+        
+        certificateViewer.classList.add('active');
+      });
+    });
+    
+    closeViewer.addEventListener('click', () => {
+      certificateViewer.classList.remove('active');
+    });
+    
+    prevCert.addEventListener('click', () => {
+      if (visibleCertificates.length === 0) return;
+      
+      currentCertIndex = (currentCertIndex - 1 + visibleCertificates.length) % visibleCertificates.length;
+      updateViewerCertificate();
+    });
+    
+    nextCert.addEventListener('click', () => {
+      if (visibleCertificates.length === 0) return;
+      
+      currentCertIndex = (currentCertIndex + 1) % visibleCertificates.length;
+      updateViewerCertificate();
+    });
+    
+    function updateViewerCertificate() {
+      const item = visibleCertificates[currentCertIndex];
+      const img = item.querySelector('img');
+      const title = item.querySelector('.cert-title').textContent;
+      
+      viewerImage.src = img.src;
+      certViewerTitle.textContent = title;
+    }
+    
+    // Add modal functionality
+    const addButton = document.getElementById('add-button');
+    const addModal = document.getElementById('add-modal');
+    const closeAddModal = document.getElementById('close-add-modal');
+    const addForm = document.getElementById('add-form');
+    const addTypeBtns = document.querySelectorAll('[data-add-type]');
+    const addProjectFields = document.getElementById('add-project-fields');
+    const addCertificateFields = document.getElementById('add-certificate-fields');
+    const addSkillFields = document.getElementById('add-skill-fields');
+    const addModalTitle = document.getElementById('add-modal-title');
+    const projectsContainer = document.getElementById('projects-container');
+    const certificatesContainer = document.getElementById('certificates-container');
+    
+    addButton.addEventListener('click', () => {
+      addModal.style.display = 'block';
+    });
+    
+    closeAddModal.addEventListener('click', () => {
+      addModal.style.display = 'none';
+    });
+    
+    window.addEventListener('click', (e) => {
+      if (e.target === addModal) {
+        addModal.style.display = 'none';
+      }
+    });
+    
+    addTypeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const addType = btn.getAttribute('data-add-type');
+        
+        // Remove active class from all buttons
+        addTypeBtns.forEach(btn => btn.classList.remove('active'));
+        
+        // Add active class to clicked button
+        btn.classList.add('active');
+        
+        // Show/hide form fields
+        addProjectFields.style.display = 'none';
+        addCertificateFields.style.display = 'none';
+        addSkillFields.style.display = 'none';
+        
+        // Update modal title
+        addModalTitle.textContent = `Add New ${addType.charAt(0).toUpperCase() + addType.slice(1)}`;
+        
+        // Show relevant fields
+        if (addType === 'project') {
+          addProjectFields.style.display = 'block';
+        } else if (addType === 'certificate') {
+          addCertificateFields.style.display = 'block';
+        } else if (addType === 'skill') {
+          addSkillFields.style.display = 'block';
+        }
+      });
+    });
+    
+    // Form submission for adding new items
+    addForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const activeTab = document.querySelector('[data-add-type].active').getAttribute('data-add-type');
+      
+      if (activeTab === 'project') {
+        addNewProject();
+      } else if (activeTab === 'certificate') {
+        addNewCertificate();
+      } else if (activeTab === 'skill') {
+        addNewSkill();
+      }
+      
+      addModal.style.display = 'none';
+      addForm.reset();
+    });
+    
+    function addNewProject() {
+      const title = document.getElementById('project-title').value;
+      const description = document.getElementById('project-description').value;
+      const image = document.getElementById('project-image').value;
+      const demo = document.getElementById('project-demo').value;
+      
+      const projectItem = document.createElement('div');
+      projectItem.className = 'portfolio-item';
+      projectItem.innerHTML = `
+        <img src="${image || 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'}" alt="${title}">
+        <div class="hover-message">Click to view details</div>
+        <div class="portfolio-content">
+          <h3>${title}</h3>
+          <p>${description}</p>
+          <button class="btn" style="padding: 8px 15px; font-size: 0.9rem;">Live Demo</button>
+        </div>
+      `;
+      
+      projectsContainer.appendChild(projectItem);
+      
+      // Add click event for demo button
+      const demoBtn = projectItem.querySelector('.btn');
+      demoBtn.addEventListener('click', () => {
+        if (demo) window.open(demo, '_blank');
+      });
+    }
+    
+    function addNewCertificate() {
+      const title = document.getElementById('certificate-title').value;
+      const image = document.getElementById('certificate-image').value;
+      const category = document.getElementById('certificate-category').value;
+      
+      const certItem = document.createElement('div');
+      certItem.className = 'certificate-item';
+      certItem.setAttribute('data-cert', category);
+      certItem.innerHTML = `
+        <img src="${image || 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80'}" alt="${title}">
+        <div class="cert-title">${title}</div>
+      `;
+      
+      certificatesContainer.appendChild(certItem);
+      
+      // Add click event for certificate
+      certItem.addEventListener('click', () => {
+        const img = certItem.querySelector('img');
+        
+        viewerImage.src = img.src;
+        certViewerTitle.textContent = title;
+        
+        // Update skills from input
+        const skillsInput = document.getElementById('certificate-skills').value;
+        const skills = skillsInput.split(',').map(skill => skill.trim());
+        
+        certSkills.innerHTML = '';
+        skills.forEach(skill => {
+          if (skill) {
+            const span = document.createElement('span');
+            span.textContent = skill;
+            certSkills.appendChild(span);
+          }
+        });
+        
+        certificateViewer.classList.add('active');
+      });
+    }
+    
+    function addNewSkill() {
+      const name = document.getElementById('skill-name').value;
+      const percent = document.getElementById('skill-percent').value;
+      const category = document.getElementById('skill-category').value;
+      const description = document.getElementById('skill-description').value;
+      const icon = document.getElementById('skill-icon').value;
+      
+      // Find the relevant category section
+      let categorySection;
+      if (category === 'programming') {
+        categorySection = document.querySelectorAll('.skill-category')[0];
+      } else if (category === 'databases') {
+        categorySection = document.querySelectorAll('.skill-category')[1];
+      } else if (category === 'tools') {
+        categorySection = document.querySelectorAll('.skill-category')[2];
+      }
+      
+      if (categorySection) {
+        const skillItem = document.createElement('div');
+        skillItem.className = 'skill-item';
+        skillItem.innerHTML = `
+          <div class="skill-header">
+            <div class="skill-icon">
+              <img src="${icon || 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg'}" alt="${name}">
+            </div>
+            <div class="skill-name">${name}</div>
+            <div class="skill-percent">${percent}%</div>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: ${percent}%"></div>
+          </div>
+          <div class="skill-description">${description}</div>
+        `;
+        
+        categorySection.appendChild(skillItem);
+      }
+    }
+    
+    // Edit modal functionality
+    const editButton = document.getElementById('edit-button');
+    const editModal = document.getElementById('edit-modal');
+    const closeModal = document.getElementById('close-modal');
+    const editForm = document.getElementById('edit-form');
+    
+    editButton.addEventListener('click', () => {
+      const password = prompt("Enter password to edit:");
+      if (password === "Ironman") {
+        editModal.style.display = 'block';
+      } else {
+        alert("Incorrect password!");
+      }
+    });
+    
+    closeModal.addEventListener('click', () => {
+      editModal.style.display = 'none';
+    });
+    
+    window.addEventListener('click', (e) => {
+      if (e.target === editModal) {
+        editModal.style.display = 'none';
+      }
+    });
+    
+    // Form submission for editing content
+    editForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      // Update all editable elements
+      document.getElementById('logo').textContent = document.getElementById('edit-logo').value;
+      document.getElementById('greeting').textContent = document.getElementById('edit-greeting').value;
+      document.getElementById('name').textContent = document.getElementById('edit-name').value;
+      document.getElementById('title').textContent = document.getElementById('edit-title').value;
+      document.getElementById('description').textContent = document.getElementById('edit-description').value;
+      
+      // Update skills
+      const skills = document.getElementById('edit-skills').value.split(',');
+      const skillsContainer = document.getElementById('skills-container');
+      skillsContainer.innerHTML = '';
+      skills.forEach(skill => {
+        if (skill.trim()) {
+          const span = document.createElement('span');
+          span.textContent = skill.trim();
+          skillsContainer.appendChild(span);
+        }
+      });
+      
+      // Update buttons
+      document.getElementById('contact-btn').textContent = document.getElementById('edit-contact-btn').value;
+      document.getElementById('download-cv').textContent = document.getElementById('edit-cv-btn').value;
+      
+      // Update social links
+      document.getElementById('github-link').href = document.getElementById('edit-github').value;
+      document.getElementById('linkedin-link').href = document.getElementById('edit-linkedin').value;
+      document.getElementById('coursera-link').href = document.getElementById('edit-coursera').value;
+      
+      // Update showcase
+      document.getElementById('showcase-title').textContent = document.getElementById('edit-showcase-title').value;
+      document.getElementById('showcase-description').textContent = document.getElementById('edit-showcase-desc').value;
+      
+      // Update footer
+      document.getElementById('footer-email').textContent = document.getElementById('edit-footer-email').value;
+      document.getElementById('footer-phone').textContent = document.getElementById('edit-footer-phone').value;
+      
+      // Update profile image
+      document.getElementById('profile-image').src = document.getElementById('edit-profile-image').value;
+      
+      // Close modal
+      editModal.style.display = 'none';
+      alert('Changes saved successfully!');
+    });
+    
+    // Initialize skill percentages animation
+    document.querySelectorAll('.progress-fill').forEach(fill => {
+      const width = fill.style.width;
+      fill.style.width = '0';
+      setTimeout(() => {
+        fill.style.width = width;
+      }, 100);
+    });
+  </script>
+</body>
+</html>
