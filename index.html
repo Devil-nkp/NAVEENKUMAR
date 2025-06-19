@@ -691,6 +691,7 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
+      position: relative;
     }
 
     .file-upload-preview {
@@ -698,6 +699,23 @@
       height: 100px;
       object-fit: cover;
       border-radius: 5px;
+      display: none;
+    }
+
+    .cancel-upload {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: #f72585;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
       display: none;
     }
 
@@ -1241,8 +1259,11 @@
           
           <div class="form-group full-width">
             <label for="edit-header-bg">Header Background</label>
-            <input type="file" id="edit-header-bg" accept="image/*">
-            <img id="header-bg-preview" class="file-upload-preview">
+            <div class="file-upload">
+              <input type="file" id="edit-header-bg" accept="image/*">
+              <button type="button" class="cancel-upload" id="cancel-header-bg">×</button>
+              <img id="header-bg-preview" class="file-upload-preview">
+            </div>
           </div>
         </div>
         
@@ -1300,8 +1321,11 @@
           
           <div class="form-group full-width">
             <label for="edit-profile-image">Profile Image</label>
-            <input type="file" id="edit-profile-image" accept="image/*">
-            <img id="profile-image-preview" class="file-upload-preview">
+            <div class="file-upload">
+              <input type="file" id="edit-profile-image" accept="image/*">
+              <button type="button" class="cancel-upload" id="cancel-profile-image">×</button>
+              <img id="profile-image-preview" class="file-upload-preview">
+            </div>
           </div>
         </div>
         
@@ -1415,6 +1439,219 @@
   </div>
 
   <script>
+    // Load saved data from localStorage if available
+    function loadSavedData() {
+      const savedData = localStorage.getItem('portfolioData');
+      if (savedData) {
+        const data = JSON.parse(savedData);
+        applySavedData(data);
+      }
+    }
+    
+    // Apply saved data to the page
+    function applySavedData(data) {
+      if (data.general) {
+        document.body.style.background = data.general.bgColor;
+        document.documentElement.style.setProperty('--accent-color', data.general.accentColor);
+        document.body.style.fontFamily = data.general.fontFamily;
+      }
+      
+      if (data.header) {
+        document.getElementById('logo').textContent = data.header.logoText;
+        
+        // Update navigation links
+        const navLinksContainer = document.getElementById('nav-links');
+        navLinksContainer.innerHTML = '';
+        data.header.navLinks.forEach(link => {
+          const a = document.createElement('a');
+          a.className = 'nav-link';
+          a.href = link.href;
+          a.textContent = link.text;
+          navLinksContainer.appendChild(a);
+        });
+      }
+      
+      if (data.hero) {
+        document.getElementById('greeting').textContent = data.hero.greeting;
+        document.getElementById('name').textContent = data.hero.name;
+        document.getElementById('title').textContent = data.hero.title;
+        document.getElementById('description').textContent = data.hero.description;
+        
+        // Update skills
+        const skillsContainer = document.getElementById('skills-container');
+        skillsContainer.innerHTML = '';
+        data.hero.skills.forEach(skill => {
+          const span = document.createElement('span');
+          span.textContent = skill;
+          skillsContainer.appendChild(span);
+        });
+        
+        document.getElementById('contact-btn').textContent = data.hero.contactBtnText;
+        document.getElementById('download-cv').textContent = data.hero.cvBtnText;
+        
+        document.getElementById('github-link').href = data.hero.githubLink;
+        document.getElementById('linkedin-link').href = data.hero.linkedinLink;
+        document.getElementById('coursera-link').href = data.hero.courseraLink;
+        
+        if (data.hero.profileImage) {
+          document.getElementById('profile-image').src = data.hero.profileImage;
+        }
+      }
+      
+      if (data.projects) {
+        const projectsContainer = document.getElementById('projects-container');
+        projectsContainer.innerHTML = '';
+        
+        data.projects.forEach(project => {
+          const projectItem = document.createElement('div');
+          projectItem.className = 'portfolio-item';
+          projectItem.setAttribute('data-project-id', project.id);
+          projectItem.innerHTML = `
+            <img src="${project.image}" alt="${project.title}">
+            <div class="hover-message">Click to view details</div>
+            <div class="portfolio-content">
+              <h3>${project.title}</h3>
+              <p>${project.description}</p>
+              <button class="btn project-demo-btn" data-demo-url="${project.demoUrl}">Live Demo</button>
+            </div>
+          `;
+          projectsContainer.appendChild(projectItem);
+        });
+      }
+      
+      if (data.certificates) {
+        const certsContainer = document.getElementById('certificates-container');
+        certsContainer.innerHTML = '';
+        
+        data.certificates.forEach(cert => {
+          const certItem = document.createElement('div');
+          certItem.className = 'certificate-item';
+          certItem.setAttribute('data-cert-id', cert.id);
+          certItem.setAttribute('data-cert', cert.category);
+          certItem.innerHTML = `
+            <img src="${cert.image}" alt="${cert.title}">
+            <div class="cert-title">${cert.title}</div>
+          `;
+          certsContainer.appendChild(certItem);
+        });
+      }
+      
+      if (data.skills) {
+        const skillsContainer = document.getElementById('skills-container');
+        skillsContainer.innerHTML = '';
+        
+        // Group skills by category
+        const skillCategories = {};
+        data.skills.forEach(skill => {
+          if (!skillCategories[skill.category]) {
+            skillCategories[skill.category] = [];
+          }
+          skillCategories[skill.category].push(skill);
+        });
+        
+        // Create skill categories and items
+        for (const [category, skills] of Object.entries(skillCategories)) {
+          const categoryDiv = document.createElement('div');
+          categoryDiv.className = 'skill-category';
+          categoryDiv.setAttribute('data-category', category);
+          
+          const categoryTitle = document.createElement('h3');
+          categoryTitle.textContent = category.charAt(0).toUpperCase() + category.slice(1).replace('-', ' ');
+          categoryDiv.appendChild(categoryTitle);
+          
+          skills.forEach(skill => {
+            const skillItem = document.createElement('div');
+            skillItem.className = 'skill-item';
+            
+            skillItem.innerHTML = `
+              <div class="skill-header">
+                <div class="skill-icon">
+                  <img src="${skill.icon}" alt="${skill.name}">
+                </div>
+                <div class="skill-name">${skill.name}</div>
+                <div class="skill-percent">${skill.percent}%</div>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: ${skill.percent}%"></div>
+              </div>
+              <div class="skill-description">${skill.description}</div>
+            `;
+            
+            categoryDiv.appendChild(skillItem);
+          });
+          
+          skillsContainer.appendChild(categoryDiv);
+        }
+      }
+      
+      if (data.experience) {
+        const expContainer = document.querySelector('.experience-section');
+        expContainer.innerHTML = `
+          <h2 style="text-align: center; color: #f72585; font-size: 2.5rem; margin-bottom: 40px;">Professional Experience</h2>
+        `;
+        
+        data.experience.forEach(exp => {
+          const expItem = document.createElement('div');
+          expItem.className = 'experience-item';
+          expItem.setAttribute('data-exp-id', exp.id);
+          expItem.innerHTML = `
+            <div class="experience-header">
+              <div class="experience-title">${exp.title}</div>
+              <div class="experience-date">${exp.date}</div>
+            </div>
+            <div class="experience-company">${exp.company}</div>
+            <div class="experience-description">${exp.description}</div>
+          `;
+          expContainer.appendChild(expItem);
+        });
+      }
+      
+      if (data.footer) {
+        document.getElementById('footer-email').textContent = data.footer.email;
+        document.getElementById('footer-phone').textContent = data.footer.phone;
+        
+        // Update footer links
+        const footerLinksContainer = document.querySelector('.footer-col:nth-child(2)');
+        footerLinksContainer.innerHTML = '<h4>Quick Links</h4>';
+        data.footer.links.forEach(link => {
+          const a = document.createElement('a');
+          a.className = 'footer-link';
+          a.href = link.href;
+          a.textContent = link.text;
+          footerLinksContainer.appendChild(a);
+        });
+        
+        // Update social links
+        const socialLinksContainer = document.querySelector('.footer-col:nth-child(3)');
+        socialLinksContainer.innerHTML = '<h4>Follow Me</h4>';
+        data.footer.socialLinks.forEach(link => {
+          const a = document.createElement('a');
+          a.className = 'social-link';
+          a.href = link.url;
+          a.target = '_blank';
+          a.innerHTML = `<i class="${link.icon}"></i> ${link.text}`;
+          socialLinksContainer.appendChild(a);
+        });
+        
+        // Update footer text
+        const footerBottom = document.querySelector('.footer-bottom');
+        footerBottom.innerHTML = '';
+        data.footer.footerText.split('\n').forEach(line => {
+          const p = document.createElement('p');
+          p.textContent = line;
+          footerBottom.appendChild(p);
+        });
+      }
+      
+      // Reinitialize event listeners
+      initEventListeners();
+    }
+    
+    // Save data to localStorage
+    function saveDataToLocalStorage(data) {
+      localStorage.setItem('portfolioData', JSON.stringify(data));
+    }
+    
     // Tab functionality
     const tabBtns = document.querySelectorAll('.tab-btn');
     const tabContents = document.querySelectorAll('.tab-content');
@@ -1572,30 +1809,36 @@
       });
     });
     
-    // File upload preview
-    document.getElementById('edit-profile-image').addEventListener('change', function(e) {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          document.getElementById('profile-image-preview').src = e.target.result;
-          document.getElementById('profile-image-preview').style.display = 'block';
-        };
-        reader.readAsDataURL(file);
-      }
-    });
+    // File upload preview with cancel button
+    function setupFileUpload(inputId, previewId, cancelId) {
+      const input = document.getElementById(inputId);
+      const preview = document.getElementById(previewId);
+      const cancel = document.getElementById(cancelId);
+      
+      input.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+            cancel.style.display = 'block';
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+      
+      cancel.addEventListener('click', function() {
+        input.value = '';
+        preview.src = '';
+        preview.style.display = 'none';
+        cancel.style.display = 'none';
+      });
+    }
     
-    document.getElementById('edit-header-bg').addEventListener('change', function(e) {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          document.getElementById('header-bg-preview').src = e.target.result;
-          document.getElementById('header-bg-preview').style.display = 'block';
-        };
-        reader.readAsDataURL(file);
-      }
-    });
+    // Setup file uploads
+    setupFileUpload('edit-profile-image', 'profile-image-preview', 'cancel-profile-image');
+    setupFileUpload('edit-header-bg', 'header-bg-preview', 'cancel-header-bg');
     
     // Load data into edit form
     function loadEditData() {
@@ -1636,7 +1879,11 @@
           <input type="text" class="project-title" value="${title}" placeholder="Project Title">
           <textarea class="project-description" placeholder="Project Description">${description}</textarea>
           <input type="text" class="project-image" value="${image}" placeholder="Image URL">
-          <input type="file" class="project-image-upload" accept="image/*" style="margin-top: 5px;">
+          <div class="file-upload">
+            <input type="file" class="project-image-upload" accept="image/*" style="margin-top: 5px;">
+            <button type="button" class="cancel-upload project-cancel-upload">×</button>
+            <img class="project-image-preview file-upload-preview" style="display: none;">
+          </div>
           <input type="text" class="project-demo" value="${demoUrl}" placeholder="Demo URL">
           <button type="button" class="btn" onclick="this.parentElement.remove()" style="padding: 5px 10px; margin-top: 5px;">Remove Project</button>
         `;
@@ -1658,7 +1905,11 @@
           <label>Certificate</label>
           <input type="text" class="cert-title" value="${title}" placeholder="Certificate Title">
           <input type="text" class="cert-image" value="${image}" placeholder="Image URL">
-          <input type="file" class="cert-image-upload" accept="image/*" style="margin-top: 5px;">
+          <div class="file-upload">
+            <input type="file" class="cert-image-upload" accept="image/*" style="margin-top: 5px;">
+            <button type="button" class="cancel-upload cert-cancel-upload">×</button>
+            <img class="cert-image-preview file-upload-preview" style="display: none;">
+          </div>
           <select class="cert-category">
             <option value="data-analytics" ${category === 'data-analytics' ? 'selected' : ''}>Data Analytics</option>
             <option value="data-structures" ${category === 'data-structures' ? 'selected' : ''}>Data Structures</option>
@@ -1690,7 +1941,11 @@
           <input type="number" class="skill-percent" value="${percent}" placeholder="Skill Percentage" min="0" max="100">
           <textarea class="skill-description" placeholder="Skill Description">${description}</textarea>
           <input type="text" class="skill-icon" value="${icon}" placeholder="Icon URL">
-          <input type="file" class="skill-icon-upload" accept="image/*" style="margin-top: 5px;">
+          <div class="file-upload">
+            <input type="file" class="skill-icon-upload" accept="image/*" style="margin-top: 5px;">
+            <button type="button" class="cancel-upload skill-cancel-upload">×</button>
+            <img class="skill-icon-preview file-upload-preview" style="display: none;">
+          </div>
           <select class="skill-category">
             <option value="programming" ${category === 'programming' ? 'selected' : ''}>Programming Languages</option>
             <option value="databases" ${category === 'databases' ? 'selected' : ''}>Databases</option>
@@ -1790,7 +2045,11 @@
         <input type="text" class="project-title" placeholder="Project Title">
         <textarea class="project-description" placeholder="Project Description"></textarea>
         <input type="text" class="project-image" placeholder="Image URL">
-        <input type="file" class="project-image-upload" accept="image/*" style="margin-top: 5px;">
+        <div class="file-upload">
+          <input type="file" class="project-image-upload" accept="image/*" style="margin-top: 5px;">
+          <button type="button" class="cancel-upload project-cancel-upload">×</button>
+          <img class="project-image-preview file-upload-preview" style="display: none;">
+        </div>
         <input type="text" class="project-demo" placeholder="Demo URL">
         <button type="button" class="btn" onclick="this.parentElement.remove()" style="padding: 5px 10px; margin-top: 5px;">Remove Project</button>
       `;
@@ -1806,7 +2065,11 @@
         <label>Certificate</label>
         <input type="text" class="cert-title" placeholder="Certificate Title">
         <input type="text" class="cert-image" placeholder="Image URL">
-        <input type="file" class="cert-image-upload" accept="image/*" style="margin-top: 5px;">
+        <div class="file-upload">
+          <input type="file" class="cert-image-upload" accept="image/*" style="margin-top: 5px;">
+          <button type="button" class="cancel-upload cert-cancel-upload">×</button>
+          <img class="cert-image-preview file-upload-preview" style="display: none;">
+        </div>
         <select class="cert-category">
           <option value="data-analytics">Data Analytics</option>
           <option value="data-structures">Data Structures</option>
@@ -1830,7 +2093,11 @@
         <input type="number" class="skill-percent" placeholder="Skill Percentage" min="0" max="100">
         <textarea class="skill-description" placeholder="Skill Description"></textarea>
         <input type="text" class="skill-icon" placeholder="Icon URL">
-        <input type="file" class="skill-icon-upload" accept="image/*" style="margin-top: 5px;">
+        <div class="file-upload">
+          <input type="file" class="skill-icon-upload" accept="image/*" style="margin-top: 5px;">
+          <button type="button" class="cancel-upload skill-cancel-upload">×</button>
+          <img class="skill-icon-preview file-upload-preview" style="display: none;">
+        </div>
         <select class="skill-category">
           <option value="programming">Programming Languages</option>
           <option value="databases">Databases</option>
@@ -1912,71 +2179,50 @@
     editForm.addEventListener('submit', (e) => {
       e.preventDefault();
       
-      // Update general settings
-      document.body.style.background = document.getElementById('edit-bg-color').value;
-      document.documentElement.style.setProperty('--accent-color', document.getElementById('edit-accent-color').value);
-      document.body.style.fontFamily = document.getElementById('edit-font-family').value;
+      // Prepare data object to save
+      const data = {};
       
-      // Update header
-      document.getElementById('logo').textContent = document.getElementById('edit-logo').value;
+      // General settings
+      data.general = {
+        bgColor: document.getElementById('edit-bg-color').value,
+        accentColor: document.getElementById('edit-accent-color').value,
+        fontFamily: document.getElementById('edit-font-family').value
+      };
       
-      // Update navigation links
-      const navLinksContainer = document.getElementById('nav-links');
-      navLinksContainer.innerHTML = '';
+      // Header data
+      data.header = {
+        logoText: document.getElementById('edit-logo').value,
+        navLinks: []
+      };
+      
+      // Navigation links
       document.querySelectorAll('#nav-links-container .form-group').forEach(linkDiv => {
         const text = linkDiv.querySelector('.nav-link-text').value;
         const href = linkDiv.querySelector('.nav-link-href').value;
         if (text && href) {
-          const link = document.createElement('a');
-          link.className = 'nav-link';
-          link.href = href;
-          link.textContent = text;
-          navLinksContainer.appendChild(link);
+          data.header.navLinks.push({ text, href });
         }
       });
       
-      // Update hero section
-      document.getElementById('greeting').textContent = document.getElementById('edit-greeting').value;
-      document.getElementById('name').textContent = document.getElementById('edit-name').value;
-      document.getElementById('title').textContent = document.getElementById('edit-title').value;
-      document.getElementById('description').textContent = document.getElementById('edit-description').value;
+      // Hero section data
+      data.hero = {
+        greeting: document.getElementById('edit-greeting').value,
+        name: document.getElementById('edit-name').value,
+        title: document.getElementById('edit-title').value,
+        description: document.getElementById('edit-description').value,
+        skills: document.getElementById('edit-skills').value.split(',').map(s => s.trim()).filter(s => s),
+        contactBtnText: document.getElementById('edit-contact-btn').value,
+        cvBtnText: document.getElementById('edit-cv-btn').value,
+        githubLink: document.getElementById('edit-github').value,
+        linkedinLink: document.getElementById('edit-linkedin').value,
+        courseraLink: document.getElementById('edit-coursera').value,
+        profileImage: document.getElementById('profile-image-preview').style.display === 'block' ? 
+          document.getElementById('profile-image-preview').src : 
+          document.getElementById('profile-image').src
+      };
       
-      // Update skills
-      const skills = document.getElementById('edit-skills').value.split(',');
-      const skillsContainer = document.getElementById('skills-container');
-      skillsContainer.innerHTML = '';
-      skills.forEach(skill => {
-        if (skill.trim()) {
-          const span = document.createElement('span');
-          span.textContent = skill.trim();
-          skillsContainer.appendChild(span);
-        }
-      });
-      
-      // Update buttons
-      document.getElementById('contact-btn').textContent = document.getElementById('edit-contact-btn').value;
-      document.getElementById('download-cv').textContent = document.getElementById('edit-cv-btn').value;
-      
-      // Update social links
-      document.getElementById('github-link').href = document.getElementById('edit-github').value;
-      document.getElementById('linkedin-link').href = document.getElementById('edit-linkedin').value;
-      document.getElementById('coursera-link').href = document.getElementById('edit-coursera').value;
-      
-      // Update profile image
-      const profileImageInput = document.getElementById('edit-profile-image');
-      if (profileImageInput.files.length > 0) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          document.getElementById('profile-image').src = e.target.result;
-        };
-        reader.readAsDataURL(profileImageInput.files[0]);
-      } else if (document.getElementById('profile-image-preview').style.display === 'block') {
-        document.getElementById('profile-image').src = document.getElementById('profile-image-preview').src;
-      }
-      
-      // Update projects
-      const projectsContainer = document.getElementById('projects-container');
-      projectsContainer.innerHTML = '';
+      // Projects data
+      data.projects = [];
       let projectId = 1;
       document.querySelectorAll('#projects-edit-container .form-group').forEach(projectDiv => {
         const title = projectDiv.querySelector('.project-title').value;
@@ -1990,242 +2236,142 @@
           const reader = new FileReader();
           reader.onload = function(e) {
             image = e.target.result;
-            createProjectElement(projectId, title, description, image, demoUrl);
+            data.projects.push({ id: projectId, title, description, image, demoUrl });
+            projectId++;
+            if (projectId > document.querySelectorAll('#projects-edit-container .form-group').length) {
+              continueSaving();
+            }
           };
           reader.readAsDataURL(imageUpload.files[0]);
         } else {
-          createProjectElement(projectId, title, description, image, demoUrl);
+          data.projects.push({ id: projectId, title, description, image, demoUrl });
+          projectId++;
+          if (projectId > document.querySelectorAll('#projects-edit-container .form-group').length) {
+            continueSaving();
+          }
         }
-        
-        projectId++;
       });
       
-      function createProjectElement(id, title, description, image, demoUrl) {
-        const projectItem = document.createElement('div');
-        projectItem.className = 'portfolio-item';
-        projectItem.setAttribute('data-project-id', id);
-        projectItem.innerHTML = `
-          <img src="${image || 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'}" alt="${title}">
-          <div class="hover-message">Click to view details</div>
-          <div class="portfolio-content">
-            <h3>${title}</h3>
-            <p>${description}</p>
-            <button class="btn project-demo-btn" data-demo-url="${demoUrl || '#'}">Live Demo</button>
-          </div>
-        `;
-        projectsContainer.appendChild(projectItem);
-        
-        // Add click event for demo button
-        projectItem.querySelector('.project-demo-btn').addEventListener('click', function() {
-          if (demoUrl) window.open(demoUrl, '_blank');
+      function continueSaving() {
+        // Certificates data
+        data.certificates = [];
+        let certId = 1;
+        document.querySelectorAll('#certificates-edit-container .form-group').forEach(certDiv => {
+          const title = certDiv.querySelector('.cert-title').value;
+          let image = certDiv.querySelector('.cert-image').value;
+          const category = certDiv.querySelector('.cert-category').value;
+          
+          // Check for uploaded image
+          const imageUpload = certDiv.querySelector('.cert-image-upload');
+          if (imageUpload.files.length > 0) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              image = e.target.result;
+              data.certificates.push({ id: certId, title, image, category });
+              certId++;
+              if (certId > document.querySelectorAll('#certificates-edit-container .form-group').length) {
+                continueSaving2();
+              }
+            };
+            reader.readAsDataURL(imageUpload.files[0]);
+          } else {
+            data.certificates.push({ id: certId, title, image, category });
+            certId++;
+            if (certId > document.querySelectorAll('#certificates-edit-container .form-group').length) {
+              continueSaving2();
+            }
+          }
         });
-      }
-      
-      // Update certificates
-      const certsContainer = document.getElementById('certificates-container');
-      certsContainer.innerHTML = '';
-      let certId = 1;
-      document.querySelectorAll('#certificates-edit-container .form-group').forEach(certDiv => {
-        const title = certDiv.querySelector('.cert-title').value;
-        let image = certDiv.querySelector('.cert-image').value;
-        const category = certDiv.querySelector('.cert-category').value;
         
-        // Check for uploaded image
-        const imageUpload = certDiv.querySelector('.cert-image-upload');
-        if (imageUpload.files.length > 0) {
-          const reader = new FileReader();
-          reader.onload = function(e) {
-            image = e.target.result;
-            createCertElement(certId, title, image, category);
-          };
-          reader.readAsDataURL(imageUpload.files[0]);
-        } else {
-          createCertElement(certId, title, image, category);
-        }
-        
-        certId++;
-      });
-      
-      function createCertElement(id, title, image, category) {
-        const certItem = document.createElement('div');
-        certItem.className = 'certificate-item';
-        certItem.setAttribute('data-cert-id', id);
-        certItem.setAttribute('data-cert', category);
-        certItem.innerHTML = `
-          <img src="${image || 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80'}" alt="${title}">
-          <div class="cert-title">${title}</div>
-        `;
-        certsContainer.appendChild(certItem);
-        
-        // Add click event for certificate
-        certItem.addEventListener('click', function() {
-          const img = this.querySelector('img');
-          const title = this.querySelector('.cert-title').textContent;
-          
-          viewerImage.src = img.src;
-          certViewerTitle.textContent = title;
-          
-          // Update skills (this would be dynamic in a real app)
-          certSkills.innerHTML = '';
-          const skills = ['Python', 'Data Analysis', 'Machine Learning']; // Default skills
-          skills.forEach(skill => {
-            const span = document.createElement('span');
-            span.textContent = skill;
-            certSkills.appendChild(span);
+        function continueSaving2() {
+          // Skills data
+          data.skills = [];
+          document.querySelectorAll('#skills-edit-container .form-group').forEach(skillDiv => {
+            const name = skillDiv.querySelector('.skill-name').value;
+            const percent = skillDiv.querySelector('.skill-percent').value;
+            const description = skillDiv.querySelector('.skill-description').value;
+            let icon = skillDiv.querySelector('.skill-icon').value;
+            const category = skillDiv.querySelector('.skill-category').value;
+            
+            // Check for uploaded icon
+            const iconUpload = skillDiv.querySelector('.skill-icon-upload');
+            if (iconUpload.files.length > 0) {
+              const reader = new FileReader();
+              reader.onload = function(e) {
+                icon = e.target.result;
+                data.skills.push({ name, percent, description, icon, category });
+                if (data.skills.length === document.querySelectorAll('#skills-edit-container .form-group').length) {
+                  continueSaving3();
+                }
+              };
+              reader.readAsDataURL(iconUpload.files[0]);
+            } else {
+              data.skills.push({ name, percent, description, icon, category });
+              if (data.skills.length === document.querySelectorAll('#skills-edit-container .form-group').length) {
+                continueSaving3();
+              }
+            }
           });
           
-          certificateViewer.classList.add('active');
-        });
+          function continueSaving3() {
+            // Experience data
+            data.experience = [];
+            let expId = 1;
+            document.querySelectorAll('#experience-edit-container .form-group').forEach(expDiv => {
+              const title = expDiv.querySelector('.exp-title').value;
+              const date = expDiv.querySelector('.exp-date').value;
+              const company = expDiv.querySelector('.exp-company').value;
+              const description = expDiv.querySelector('.exp-description').value;
+              
+              data.experience.push({ id: expId, title, date, company, description });
+              expId++;
+            });
+            
+            // Footer data
+            data.footer = {
+              email: document.getElementById('edit-footer-email').value,
+              phone: document.getElementById('edit-footer-phone').value,
+              links: [],
+              socialLinks: [],
+              footerText: document.getElementById('edit-footer-text').value
+            };
+            
+            // Footer links
+            document.querySelectorAll('#footer-links-container .form-group').forEach(linkDiv => {
+              const text = linkDiv.querySelector('.footer-link-text').value;
+              const href = linkDiv.querySelector('.footer-link-href').value;
+              if (text && href) {
+                data.footer.links.push({ text, href });
+              }
+            });
+            
+            // Social links
+            document.querySelectorAll('#social-links-container .form-group').forEach(linkDiv => {
+              const icon = linkDiv.querySelector('.social-link-icon').value;
+              const text = linkDiv.querySelector('.social-link-text').value;
+              const url = linkDiv.querySelector('.social-link-url').value;
+              if (icon && text && url) {
+                data.footer.socialLinks.push({ icon, text, url });
+              }
+            });
+            
+            // Save to localStorage
+            saveDataToLocalStorage(data);
+            
+            // Apply changes to the page
+            applySavedData(data);
+            
+            // Close modal
+            editModal.style.display = 'none';
+            alert('Changes saved successfully!');
+          }
+        }
       }
       
-      // Update skills
-      const skillsEditContainer = document.getElementById('skills-container');
-      skillsEditContainer.innerHTML = '';
-      
-      // Group skills by category
-      const skillCategories = {};
-      document.querySelectorAll('#skills-edit-container .form-group').forEach(skillDiv => {
-        const name = skillDiv.querySelector('.skill-name').value;
-        const percent = skillDiv.querySelector('.skill-percent').value;
-        const description = skillDiv.querySelector('.skill-description').value;
-        let icon = skillDiv.querySelector('.skill-icon').value;
-        const category = skillDiv.querySelector('.skill-category').value;
-        
-        // Check for uploaded icon
-        const iconUpload = skillDiv.querySelector('.skill-icon-upload');
-        if (iconUpload.files.length > 0) {
-          const reader = new FileReader();
-          reader.onload = function(e) {
-            icon = e.target.result;
-            addSkillToCategory(category, name, percent, description, icon);
-          };
-          reader.readAsDataURL(iconUpload.files[0]);
-        } else {
-          addSkillToCategory(category, name, percent, description, icon);
-        }
-      });
-      
-      function addSkillToCategory(category, name, percent, description, icon) {
-        if (!skillCategories[category]) {
-          skillCategories[category] = [];
-        }
-        skillCategories[category].push({ name, percent, description, icon });
+      // If no projects, continue saving
+      if (document.querySelectorAll('#projects-edit-container .form-group').length === 0) {
+        continueSaving();
       }
-      
-      // Create skill categories and items
-      for (const [category, skills] of Object.entries(skillCategories)) {
-        const categoryDiv = document.createElement('div');
-        categoryDiv.className = 'skill-category';
-        categoryDiv.setAttribute('data-category', category);
-        
-        const categoryTitle = document.createElement('h3');
-        categoryTitle.textContent = category.charAt(0).toUpperCase() + category.slice(1).replace('-', ' ');
-        categoryDiv.appendChild(categoryTitle);
-        
-        skills.forEach(skill => {
-          const skillItem = document.createElement('div');
-          skillItem.className = 'skill-item';
-          
-          skillItem.innerHTML = `
-            <div class="skill-header">
-              <div class="skill-icon">
-                <img src="${skill.icon || 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg'}" alt="${skill.name}">
-              </div>
-              <div class="skill-name">${skill.name}</div>
-              <div class="skill-percent">${skill.percent}%</div>
-            </div>
-            <div class="progress-bar">
-              <div class="progress-fill" style="width: ${skill.percent}%"></div>
-            </div>
-            <div class="skill-description">${skill.description}</div>
-          `;
-          
-          categoryDiv.appendChild(skillItem);
-        });
-        
-        skillsEditContainer.appendChild(categoryDiv);
-      }
-      
-      // Update experience
-      const expContainer = document.querySelector('.experience-section');
-      expContainer.innerHTML = `
-        <h2 style="text-align: center; color: #f72585; font-size: 2.5rem; margin-bottom: 40px;">Professional Experience</h2>
-      `;
-      
-      let expId = 1;
-      document.querySelectorAll('#experience-edit-container .form-group').forEach(expDiv => {
-        const title = expDiv.querySelector('.exp-title').value;
-        const date = expDiv.querySelector('.exp-date').value;
-        const company = expDiv.querySelector('.exp-company').value;
-        const description = expDiv.querySelector('.exp-description').value;
-        
-        const expItem = document.createElement('div');
-        expItem.className = 'experience-item';
-        expItem.setAttribute('data-exp-id', expId);
-        expItem.innerHTML = `
-          <div class="experience-header">
-            <div class="experience-title">${title}</div>
-            <div class="experience-date">${date}</div>
-          </div>
-          <div class="experience-company">${company}</div>
-          <div class="experience-description">${description}</div>
-        `;
-        expContainer.appendChild(expItem);
-        expId++;
-      });
-      
-      // Update footer
-      document.getElementById('footer-email').textContent = document.getElementById('edit-footer-email').value;
-      document.getElementById('footer-phone').textContent = document.getElementById('edit-footer-phone').value;
-      
-      // Update footer links
-      const footerLinksContainer = document.querySelector('.footer-col:nth-child(2)');
-      footerLinksContainer.innerHTML = '<h4>Quick Links</h4>';
-      document.querySelectorAll('#footer-links-container .form-group').forEach(linkDiv => {
-        const text = linkDiv.querySelector('.footer-link-text').value;
-        const href = linkDiv.querySelector('.footer-link-href').value;
-        if (text && href) {
-          const link = document.createElement('a');
-          link.className = 'footer-link';
-          link.href = href;
-          link.textContent = text;
-          footerLinksContainer.appendChild(link);
-        }
-      });
-      
-      // Update social links
-      const socialLinksContainer = document.querySelector('.footer-col:nth-child(3)');
-      socialLinksContainer.innerHTML = '<h4>Follow Me</h4>';
-      document.querySelectorAll('#social-links-container .form-group').forEach(linkDiv => {
-        const icon = linkDiv.querySelector('.social-link-icon').value;
-        const text = linkDiv.querySelector('.social-link-text').value;
-        const url = linkDiv.querySelector('.social-link-url').value;
-        if (icon && text && url) {
-          const link = document.createElement('a');
-          link.className = 'social-link';
-          link.href = url;
-          link.target = '_blank';
-          link.innerHTML = `<i class="${icon}"></i> ${text}`;
-          socialLinksContainer.appendChild(link);
-        }
-      });
-      
-      // Update footer text
-      const footerText = document.getElementById('edit-footer-text').value.split('\n');
-      const footerBottom = document.querySelector('.footer-bottom');
-      footerBottom.innerHTML = '';
-      footerText.forEach(line => {
-        const p = document.createElement('p');
-        p.textContent = line;
-        footerBottom.appendChild(p);
-      });
-      
-      // Close modal
-      editModal.style.display = 'none';
-      alert('Changes saved successfully!');
-      
-      // Reinitialize event listeners
-      initEventListeners();
     });
     
     function initEventListeners() {
@@ -2316,6 +2462,11 @@
       setTimeout(() => {
         fill.style.width = width;
       }, 100);
+    });
+    
+    // Load saved data when page loads
+    window.addEventListener('DOMContentLoaded', () => {
+      loadSavedData();
     });
     
     // Initialize event listeners
