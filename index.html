@@ -42,6 +42,10 @@
       cursor: pointer;
     }
 
+    nav {
+      display: flex;
+    }
+
     nav a {
       color: white;
       margin: 0 15px;
@@ -492,119 +496,6 @@
       margin-top: 5px;
     }
 
-    /* Add Buttons */
-    .add-button {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 50px;
-      height: 50px;
-      background: #f72585;
-      color: white;
-      border-radius: 50%;
-      position: fixed;
-      bottom: 100px;
-      right: 30px;
-      cursor: pointer;
-      box-shadow: 0 0 20px rgba(247, 37, 133, 0.5);
-      z-index: 1000;
-      transition: transform 0.3s;
-    }
-
-    .add-button:hover {
-      transform: scale(1.1);
-    }
-
-    /* Add Modal */
-    .add-modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      z-index: 2000;
-      overflow-y: auto;
-      padding: 40px;
-    }
-
-    .add-modal-content {
-      background: #1a1a2e;
-      max-width: 600px;
-      margin: 40px auto;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 0 30px rgba(247, 37, 133, 0.3);
-    }
-
-    .add-modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 30px;
-    }
-
-    .add-modal-header h2 {
-      color: #f72585;
-    }
-
-    .close-add-modal {
-      background: transparent;
-      border: none;
-      color: white;
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-
-    .add-form {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .add-form-group {
-      margin-bottom: 15px;
-    }
-
-    .add-form-group label {
-      display: block;
-      margin-bottom: 8px;
-      color: #ccc;
-    }
-
-    .add-form-group input,
-    .add-form-group textarea,
-    .add-form-group select {
-      width: 100%;
-      padding: 10px 15px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 5px;
-      color: white;
-    }
-
-    .add-form-group textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-
-    .save-add-item {
-      background: linear-gradient(90deg, #6c63ff, #fc466b);
-      color: white;
-      border: none;
-      padding: 12px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-      margin-top: 20px;
-      transition: transform 0.3s;
-    }
-
-    .save-add-item:hover {
-      transform: scale(1.02);
-    }
-
     /* Experience Section */
     .experience-section {
       max-width: 1000px;
@@ -796,6 +687,20 @@
       resize: vertical;
     }
 
+    .file-upload {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .file-upload-preview {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 5px;
+      display: none;
+    }
+
     .full-width {
       grid-column: 1 / -1;
     }
@@ -815,6 +720,36 @@
 
     .save-changes:hover {
       transform: scale(1.02);
+    }
+
+    /* Edit Sections */
+    .edit-sections {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .edit-section-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .edit-section-btn.active {
+      background: #f72585;
+    }
+
+    .edit-section {
+      display: none;
+    }
+
+    .edit-section.active {
+      display: block;
     }
 
     /* Responsive */
@@ -868,7 +803,7 @@
   <!-- Header -->
   <header>
     <div class="logo" id="logo">AI Portfolio</div>
-    <nav>
+    <nav id="nav-links">
       <a href="#home" class="nav-link">Home</a>
       <a href="#portfolio" class="nav-link">Portfolio</a>
       <a href="#experience" class="nav-link">Experience</a>
@@ -923,43 +858,43 @@
     <!-- Projects Tab -->
     <div class="tab-content active" id="projects-tab">
       <div class="portfolio-grid" id="projects-container">
-        <div class="portfolio-item">
+        <div class="portfolio-item" data-project-id="1">
           <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=765&q=80" alt="NeuroGenix">
           <div class="hover-message">Click to view details</div>
           <div class="portfolio-content">
             <h3>NeuroGenix AI</h3>
             <p>Genetic Sequence Analyzer that uses machine learning to identify patterns in genomic data.</p>
-            <button class="btn" style="padding: 8px 15px; font-size: 0.9rem;">Live Demo</button>
+            <button class="btn project-demo-btn" data-demo-url="#">Live Demo</button>
           </div>
         </div>
         
-        <div class="portfolio-item">
+        <div class="portfolio-item" data-project-id="2">
           <img src="https://images.unsplash.com/photo-1586339949916-3e9457bef6d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Briefeek AI">
           <div class="hover-message">Click to view details</div>
           <div class="portfolio-content">
             <h3>Briefeek AI</h3>
             <p>Personalized News Aggregator that curates content based on user preferences using NLP.</p>
-            <button class="btn" style="padding: 8px 15px; font-size: 0.9rem;">Live Demo</button>
+            <button class="btn project-demo-btn" data-demo-url="#">Live Demo</button>
           </div>
         </div>
         
-        <div class="portfolio-item">
+        <div class="portfolio-item" data-project-id="3">
           <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="HireGuard AI">
           <div class="hover-message">Click to view details</div>
           <div class="portfolio-content">
             <h3>HireGuard AI</h3>
             <p>Fraudulent Job Posting Detector that analyzes job listings for potential scams.</p>
-            <button class="btn" style="padding: 8px 15px; font-size: 0.9rem;">Live Demo</button>
+            <button class="btn project-demo-btn" data-demo-url="#">Live Demo</button>
           </div>
         </div>
         
-        <div class="portfolio-item">
+        <div class="portfolio-item" data-project-id="4">
           <img src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="FeelFrame AI">
           <div class="hover-message">Click to view details</div>
           <div class="portfolio-content">
             <h3>FeelFrame AI</h3>
             <p>Text to Video Generator that creates engaging videos from written content.</p>
-            <button class="btn" style="padding: 8px 15px; font-size: 0.9rem;">Live Demo</button>
+            <button class="btn project-demo-btn" data-demo-url="#">Live Demo</button>
           </div>
         </div>
       </div>
@@ -977,41 +912,41 @@
       
       <div class="certificate-grid" id="certificates-container">
         <!-- Data Analytics Certificates -->
-        <div class="certificate-item" data-cert="data-analytics">
+        <div class="certificate-item" data-cert="data-analytics" data-cert-id="1">
           <img src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Data Analytics Certificate 1">
           <div class="cert-title">Google Data Analytics 1</div>
         </div>
         
-        <div class="certificate-item" data-cert="data-analytics">
+        <div class="certificate-item" data-cert="data-analytics" data-cert-id="2">
           <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Data Analytics Certificate 2">
           <div class="cert-title">Google Data Analytics 2</div>
         </div>
         
         <!-- Data Structures Certificates -->
-        <div class="certificate-item" data-cert="data-structures">
+        <div class="certificate-item" data-cert="data-structures" data-cert-id="3">
           <img src="https://images.unsplash.com/photo-1531545514256-b1400bc00f31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Data Structures Certificate 1">
           <div class="cert-title">UC San Diego DSA 1</div>
         </div>
         
-        <div class="certificate-item" data-cert="data-structures">
+        <div class="certificate-item" data-cert="data-structures" data-cert-id="4">
           <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Data Structures Certificate 2">
           <div class="cert-title">UC San Diego DSA 2</div>
         </div>
         
         <!-- Genomic Data Certificates -->
-        <div class="certificate-item" data-cert="genomics">
+        <div class="certificate-item" data-cert="genomics" data-cert-id="5">
           <img src="https://images.unsplash.com/photo-1581094271901-8022df4466f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Genomic Data Certificate 1">
           <div class="cert-title">JHU Genomics 1</div>
         </div>
         
         <!-- MongoDB Certificate -->
-        <div class="certificate-item" data-cert="mongodb">
+        <div class="certificate-item" data-cert="mongodb" data-cert-id="6">
           <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80" alt="MongoDB Certificate">
           <div class="cert-title">MongoDB Python Developer</div>
         </div>
         
         <!-- SQL Certificates -->
-        <div class="certificate-item" data-cert="sql">
+        <div class="certificate-item" data-cert="sql" data-cert-id="7">
           <img src="https://images.unsplash.com/photo-1605731414532-6b26952cc152?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="SQL Certificate 1">
           <div class="cert-title">SQL Basics 1</div>
         </div>
@@ -1020,11 +955,11 @@
     
     <!-- Skills Tab -->
     <div class="tab-content" id="skills-tab">
-      <div class="skills-section">
-        <div class="skill-category">
+      <div class="skills-section" id="skills-container">
+        <div class="skill-category" data-category="programming">
           <h3>Programming Languages</h3>
           
-          <div class="skill-item">
+          <div class="skill-item" data-skill-id="1">
             <div class="skill-header">
               <div class="skill-icon">
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
@@ -1038,7 +973,7 @@
             <div class="skill-description">Used in machine learning projects, data analysis, and automation scripts.</div>
           </div>
           
-          <div class="skill-item">
+          <div class="skill-item" data-skill-id="2">
             <div class="skill-header">
               <div class="skill-icon">
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript">
@@ -1052,7 +987,7 @@
             <div class="skill-description">Used for web development and interactive data visualizations.</div>
           </div>
           
-          <div class="skill-item">
+          <div class="skill-item" data-skill-id="3">
             <div class="skill-header">
               <div class="skill-icon">
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" alt="C">
@@ -1067,10 +1002,10 @@
           </div>
         </div>
         
-        <div class="skill-category">
+        <div class="skill-category" data-category="databases">
           <h3>Databases</h3>
           
-          <div class="skill-item">
+          <div class="skill-item" data-skill-id="4">
             <div class="skill-header">
               <div class="skill-icon">
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB">
@@ -1084,7 +1019,7 @@
             <div class="skill-description">Used for storing and querying large datasets in AI projects.</div>
           </div>
           
-          <div class="skill-item">
+          <div class="skill-item" data-skill-id="5">
             <div class="skill-header">
               <div class="skill-icon">
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="SQL">
@@ -1099,10 +1034,10 @@
           </div>
         </div>
         
-        <div class="skill-category">
+        <div class="skill-category" data-category="tools">
           <h3>Tools & Frameworks</h3>
           
-          <div class="skill-item">
+          <div class="skill-item" data-skill-id="6">
             <div class="skill-header">
               <div class="skill-icon">
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" alt="Pandas">
@@ -1116,7 +1051,7 @@
             <div class="skill-description">Used for data manipulation and analysis in Python.</div>
           </div>
           
-          <div class="skill-item">
+          <div class="skill-item" data-skill-id="7">
             <div class="skill-header">
               <div class="skill-icon">
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apache/apache-original.svg" alt="Apache Spark">
@@ -1130,7 +1065,7 @@
             <div class="skill-description">Used for big data processing and distributed computing.</div>
           </div>
           
-          <div class="skill-item">
+          <div class="skill-item" data-skill-id="8">
             <div class="skill-header">
               <div class="skill-icon">
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch">
@@ -1152,7 +1087,7 @@
   <section class="experience-section" id="experience">
     <h2 style="text-align: center; color: #f72585; font-size: 2.5rem; margin-bottom: 40px;">Professional Experience</h2>
     
-    <div class="experience-item">
+    <div class="experience-item" data-exp-id="1">
       <div class="experience-header">
         <div class="experience-title">Team & Project Head</div>
         <div class="experience-date">10/2024 - 11/2024</div>
@@ -1167,7 +1102,7 @@
       </div>
     </div>
     
-    <div class="experience-item">
+    <div class="experience-item" data-exp-id="2">
       <div class="experience-header">
         <div class="experience-title">Event Architect</div>
         <div class="experience-date">3/2025</div>
@@ -1181,7 +1116,7 @@
       </div>
     </div>
     
-    <div class="experience-item">
+    <div class="experience-item" data-exp-id="3">
       <div class="experience-header">
         <div class="experience-title">Education</div>
         <div class="experience-date">2021 - 2025</div>
@@ -1204,17 +1139,17 @@
       
       <div class="footer-col">
         <h4>Quick Links</h4>
-        <a href="#home">Home</a>
-        <a href="#portfolio">Portfolio</a>
-        <a href="#experience">Experience</a>
-        <a href="#contact">Contact</a>
+        <a href="#home" class="footer-link">Home</a>
+        <a href="#portfolio" class="footer-link">Portfolio</a>
+        <a href="#experience" class="footer-link">Experience</a>
+        <a href="#contact" class="footer-link">Contact</a>
       </div>
       
       <div class="footer-col">
         <h4>Follow Me</h4>
-        <a href="#" target="_blank"><i class="fab fa-github"></i> GitHub</a>
-        <a href="#" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
-        <a href="#" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+        <a href="#" target="_blank" class="social-link"><i class="fab fa-github"></i> GitHub</a>
+        <a href="#" target="_blank" class="social-link"><i class="fab fa-linkedin"></i> LinkedIn</a>
+        <a href="#" target="_blank" class="social-link"><i class="fab fa-twitter"></i> Twitter</a>
       </div>
     </div>
     
@@ -1242,86 +1177,6 @@
     </div>
   </div>
 
-  <!-- Add Button -->
-  <div class="add-button" id="add-button">
-    <i class="fas fa-plus"></i>
-  </div>
-
-  <!-- Add Modal -->
-  <div class="add-modal" id="add-modal">
-    <div class="add-modal-content">
-      <div class="add-modal-header">
-        <h2 id="add-modal-title">Add New Item</h2>
-        <button class="close-add-modal" id="close-add-modal">&times;</button>
-      </div>
-      
-      <div class="tabs">
-        <button class="tab-btn active" data-add-type="project">Project</button>
-        <button class="tab-btn" data-add-type="certificate">Certificate</button>
-        <button class="tab-btn" data-add-type="skill">Skill</button>
-      </div>
-      
-      <form class="add-form" id="add-form">
-        <div class="add-form-group" id="add-project-fields">
-          <label for="project-title">Project Title</label>
-          <input type="text" id="project-title" placeholder="Enter project title">
-          
-          <label for="project-description">Description</label>
-          <textarea id="project-description" placeholder="Enter project description"></textarea>
-          
-          <label for="project-image">Image URL</label>
-          <input type="text" id="project-image" placeholder="Enter image URL">
-          
-          <label for="project-demo">Demo URL</label>
-          <input type="text" id="project-demo" placeholder="Enter live demo URL">
-        </div>
-        
-        <div class="add-form-group" id="add-certificate-fields" style="display: none;">
-          <label for="certificate-title">Certificate Title</label>
-          <input type="text" id="certificate-title" placeholder="Enter certificate title">
-          
-          <label for="certificate-image">Image URL</label>
-          <input type="text" id="certificate-image" placeholder="Enter image URL">
-          
-          <label for="certificate-category">Category</label>
-          <select id="certificate-category">
-            <option value="data-analytics">Data Analytics</option>
-            <option value="data-structures">Data Structures</option>
-            <option value="genomics">Genomic Data</option>
-            <option value="mongodb">MongoDB</option>
-            <option value="sql">SQL</option>
-          </select>
-          
-          <label for="certificate-skills">Skills Gained (comma separated)</label>
-          <input type="text" id="certificate-skills" placeholder="Python, Data Analysis, etc.">
-        </div>
-        
-        <div class="add-form-group" id="add-skill-fields" style="display: none;">
-          <label for="skill-name">Skill Name</label>
-          <input type="text" id="skill-name" placeholder="Enter skill name">
-          
-          <label for="skill-percent">Skill Percentage</label>
-          <input type="number" id="skill-percent" min="0" max="100" placeholder="Enter percentage (0-100)">
-          
-          <label for="skill-category">Category</label>
-          <select id="skill-category">
-            <option value="programming">Programming Languages</option>
-            <option value="databases">Databases</option>
-            <option value="tools">Tools & Frameworks</option>
-          </select>
-          
-          <label for="skill-description">Description</label>
-          <textarea id="skill-description" placeholder="Enter skill description"></textarea>
-          
-          <label for="skill-icon">Icon URL</label>
-          <input type="text" id="skill-icon" placeholder="Enter icon URL">
-        </div>
-        
-        <button type="submit" class="save-add-item">Save Item</button>
-      </form>
-    </div>
-  </div>
-
   <!-- Edit Button -->
   <button class="edit-button" id="edit-button">Edit Content</button>
 
@@ -1333,85 +1188,225 @@
         <button class="close-modal" id="close-modal">&times;</button>
       </div>
       
+      <div class="edit-sections">
+        <button class="edit-section-btn active" data-section="general">General</button>
+        <button class="edit-section-btn" data-section="header">Header</button>
+        <button class="edit-section-btn" data-section="hero">Hero Section</button>
+        <button class="edit-section-btn" data-section="projects">Projects</button>
+        <button class="edit-section-btn" data-section="certificates">Certificates</button>
+        <button class="edit-section-btn" data-section="skills">Skills</button>
+        <button class="edit-section-btn" data-section="experience">Experience</button>
+        <button class="edit-section-btn" data-section="footer">Footer</button>
+      </div>
+      
       <form class="edit-form" id="edit-form">
-        <div class="form-group">
-          <label for="edit-logo">Logo Text</label>
-          <input type="text" id="edit-logo" value="AI Portfolio">
+        <!-- General Section -->
+        <div class="edit-section active" id="edit-general">
+          <div class="form-group full-width">
+            <label for="edit-bg-color">Background Color</label>
+            <input type="color" id="edit-bg-color" value="#0f0c29">
+          </div>
+          
+          <div class="form-group full-width">
+            <label for="edit-accent-color">Accent Color</label>
+            <input type="color" id="edit-accent-color" value="#f72585">
+          </div>
+          
+          <div class="form-group full-width">
+            <label for="edit-font-family">Font Family</label>
+            <select id="edit-font-family">
+              <option value="Poppins">Poppins</option>
+              <option value="Roboto">Roboto</option>
+              <option value="Open Sans">Open Sans</option>
+              <option value="Montserrat">Montserrat</option>
+              <option value="Lato">Lato</option>
+            </select>
+          </div>
         </div>
         
-        <div class="form-group">
-          <label for="edit-greeting">Greeting Text</label>
-          <input type="text" id="edit-greeting" value="Hello, I'm">
+        <!-- Header Section -->
+        <div class="edit-section" id="edit-header">
+          <div class="form-group">
+            <label for="edit-logo">Logo Text</label>
+            <input type="text" id="edit-logo" value="AI Portfolio">
+          </div>
+          
+          <div class="form-group full-width">
+            <label>Navigation Links</label>
+            <div id="nav-links-container">
+              <!-- Navigation links will be added here dynamically -->
+            </div>
+            <button type="button" class="btn" id="add-nav-link" style="margin-top: 10px;">Add Link</button>
+          </div>
+          
+          <div class="form-group full-width">
+            <label for="edit-header-bg">Header Background</label>
+            <input type="file" id="edit-header-bg" accept="image/*">
+            <img id="header-bg-preview" class="file-upload-preview">
+          </div>
         </div>
         
-        <div class="form-group">
-          <label for="edit-name">Your Name</label>
-          <input type="text" id="edit-name" value="AI & Data Science Specialist">
+        <!-- Hero Section -->
+        <div class="edit-section" id="edit-hero">
+          <div class="form-group">
+            <label for="edit-greeting">Greeting Text</label>
+            <input type="text" id="edit-greeting" value="Hello, I'm">
+          </div>
+          
+          <div class="form-group">
+            <label for="edit-name">Your Name</label>
+            <input type="text" id="edit-name" value="AI & Data Science Specialist">
+          </div>
+          
+          <div class="form-group">
+            <label for="edit-title">Your Title</label>
+            <input type="text" id="edit-title" value="Machine Learning Engineer | Data Scientist">
+          </div>
+          
+          <div class="form-group full-width">
+            <label for="edit-description">Description</label>
+            <textarea id="edit-description">Innovative and self-motivated AI & Data Science graduate with a passion for machine learning, artificial intelligence, and big data analytics. Proficient in Python, SQL, MongoDB, and Apache Spark.</textarea>
+          </div>
+          
+          <div class="form-group full-width">
+            <label for="edit-skills">Skills (comma separated)</label>
+            <input type="text" id="edit-skills" value="Python, SQL, MongoDB, Apache Spark, Machine Learning">
+          </div>
+          
+          <div class="form-group">
+            <label for="edit-contact-btn">Contact Button Text</label>
+            <input type="text" id="edit-contact-btn" value="Contact Me →">
+          </div>
+          
+          <div class="form-group">
+            <label for="edit-cv-btn">CV Button Text</label>
+            <input type="text" id="edit-cv-btn" value="Download CV">
+          </div>
+          
+          <div class="form-group">
+            <label for="edit-github">GitHub Link</label>
+            <input type="text" id="edit-github" value="#">
+          </div>
+          
+          <div class="form-group">
+            <label for="edit-linkedin">LinkedIn Link</label>
+            <input type="text" id="edit-linkedin" value="#">
+          </div>
+          
+          <div class="form-group">
+            <label for="edit-coursera">Coursera Link</label>
+            <input type="text" id="edit-coursera" value="#">
+          </div>
+          
+          <div class="form-group full-width">
+            <label for="edit-profile-image">Profile Image</label>
+            <input type="file" id="edit-profile-image" accept="image/*">
+            <img id="profile-image-preview" class="file-upload-preview">
+          </div>
         </div>
         
-        <div class="form-group">
-          <label for="edit-title">Your Title</label>
-          <input type="text" id="edit-title" value="Machine Learning Engineer | Data Scientist">
+        <!-- Projects Section -->
+        <div class="edit-section" id="edit-projects">
+          <div class="form-group full-width">
+            <label for="edit-showcase-title">Showcase Title</label>
+            <input type="text" id="edit-showcase-title" value="Portfolio Showcase">
+          </div>
+          
+          <div class="form-group full-width">
+            <label for="edit-showcase-desc">Showcase Description</label>
+            <textarea id="edit-showcase-desc">Explore my journey through projects, certificates, and technical expertise. Each section represents a milestone in my continuous learning path.</textarea>
+          </div>
+          
+          <div class="form-group full-width">
+            <label>Projects</label>
+            <div id="projects-edit-container">
+              <!-- Projects will be added here dynamically -->
+            </div>
+            <button type="button" class="btn" id="add-project-btn" style="margin-top: 10px;">Add Project</button>
+          </div>
         </div>
         
-        <div class="form-group full-width">
-          <label for="edit-description">Description</label>
-          <textarea id="edit-description">Innovative and self-motivated AI & Data Science graduate with a passion for machine learning, artificial intelligence, and big data analytics. Proficient in Python, SQL, MongoDB, and Apache Spark.</textarea>
+        <!-- Certificates Section -->
+        <div class="edit-section" id="edit-certificates">
+          <div class="form-group full-width">
+            <label>Certificate Categories</label>
+            <div id="cert-categories-container">
+              <!-- Certificate categories will be added here dynamically -->
+            </div>
+            <button type="button" class="btn" id="add-cert-category" style="margin-top: 10px;">Add Category</button>
+          </div>
+          
+          <div class="form-group full-width">
+            <label>Certificates</label>
+            <div id="certificates-edit-container">
+              <!-- Certificates will be added here dynamically -->
+            </div>
+            <button type="button" class="btn" id="add-certificate-btn" style="margin-top: 10px;">Add Certificate</button>
+          </div>
         </div>
         
-        <div class="form-group full-width">
-          <label for="edit-skills">Skills (comma separated)</label>
-          <input type="text" id="edit-skills" value="Python, SQL, MongoDB, Apache Spark, Machine Learning">
+        <!-- Skills Section -->
+        <div class="edit-section" id="edit-skills">
+          <div class="form-group full-width">
+            <label>Skill Categories</label>
+            <div id="skill-categories-container">
+              <!-- Skill categories will be added here dynamically -->
+            </div>
+            <button type="button" class="btn" id="add-skill-category" style="margin-top: 10px;">Add Category</button>
+          </div>
+          
+          <div class="form-group full-width">
+            <label>Skills</label>
+            <div id="skills-edit-container">
+              <!-- Skills will be added here dynamically -->
+            </div>
+            <button type="button" class="btn" id="add-skill-btn" style="margin-top: 10px;">Add Skill</button>
+          </div>
         </div>
         
-        <div class="form-group">
-          <label for="edit-contact-btn">Contact Button Text</label>
-          <input type="text" id="edit-contact-btn" value="Contact Me →">
+        <!-- Experience Section -->
+        <div class="edit-section" id="edit-experience">
+          <div class="form-group full-width">
+            <label>Experience Items</label>
+            <div id="experience-edit-container">
+              <!-- Experience items will be added here dynamically -->
+            </div>
+            <button type="button" class="btn" id="add-experience-btn" style="margin-top: 10px;">Add Experience</button>
+          </div>
         </div>
         
-        <div class="form-group">
-          <label for="edit-cv-btn">CV Button Text</label>
-          <input type="text" id="edit-cv-btn" value="Download CV">
-        </div>
-        
-        <div class="form-group">
-          <label for="edit-github">GitHub Link</label>
-          <input type="text" id="edit-github" value="#">
-        </div>
-        
-        <div class="form-group">
-          <label for="edit-linkedin">LinkedIn Link</label>
-          <input type="text" id="edit-linkedin" value="#">
-        </div>
-        
-        <div class="form-group">
-          <label for="edit-coursera">Coursera Link</label>
-          <input type="text" id="edit-coursera" value="#">
-        </div>
-        
-        <div class="form-group full-width">
-          <label for="edit-showcase-title">Showcase Title</label>
-          <input type="text" id="edit-showcase-title" value="Portfolio Showcase">
-        </div>
-        
-        <div class="form-group full-width">
-          <label for="edit-showcase-desc">Showcase Description</label>
-          <textarea id="edit-showcase-desc">Explore my journey through projects, certificates, and technical expertise. Each section represents a milestone in my continuous learning path.</textarea>
-        </div>
-        
-        <div class="form-group">
-          <label for="edit-footer-email">Footer Email</label>
-          <input type="text" id="edit-footer-email" value="ai.specialist@example.com">
-        </div>
-        
-        <div class="form-group">
-          <label for="edit-footer-phone">Footer Phone</label>
-          <input type="text" id="edit-footer-phone" value="+123-456-7890">
-        </div>
-        
-        <div class="form-group full-width">
-          <label for="edit-profile-image">Profile Image URL</label>
-          <input type="text" id="edit-profile-image" value="https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80">
+        <!-- Footer Section -->
+        <div class="edit-section" id="edit-footer">
+          <div class="form-group">
+            <label for="edit-footer-email">Footer Email</label>
+            <input type="text" id="edit-footer-email" value="ai.specialist@example.com">
+          </div>
+          
+          <div class="form-group">
+            <label for="edit-footer-phone">Footer Phone</label>
+            <input type="text" id="edit-footer-phone" value="+123-456-7890">
+          </div>
+          
+          <div class="form-group full-width">
+            <label>Footer Links</label>
+            <div id="footer-links-container">
+              <!-- Footer links will be added here dynamically -->
+            </div>
+            <button type="button" class="btn" id="add-footer-link" style="margin-top: 10px;">Add Link</button>
+          </div>
+          
+          <div class="form-group full-width">
+            <label>Social Links</label>
+            <div id="social-links-container">
+              <!-- Social links will be added here dynamically -->
+            </div>
+            <button type="button" class="btn" id="add-social-link" style="margin-top: 10px;">Add Social Link</button>
+          </div>
+          
+          <div class="form-group full-width">
+            <label for="edit-footer-text">Footer Text</label>
+            <textarea id="edit-footer-text">© 2025 AI Portfolio. All rights reserved.\nPowered by AI and Data Science</textarea>
+          </div>
         </div>
         
         <button type="submit" class="save-changes">Save Changes</button>
@@ -1534,194 +1529,19 @@
       certViewerTitle.textContent = title;
     }
     
-    // Add modal functionality
-    const addButton = document.getElementById('add-button');
-    const addModal = document.getElementById('add-modal');
-    const closeAddModal = document.getElementById('close-add-modal');
-    const addForm = document.getElementById('add-form');
-    const addTypeBtns = document.querySelectorAll('[data-add-type]');
-    const addProjectFields = document.getElementById('add-project-fields');
-    const addCertificateFields = document.getElementById('add-certificate-fields');
-    const addSkillFields = document.getElementById('add-skill-fields');
-    const addModalTitle = document.getElementById('add-modal-title');
-    const projectsContainer = document.getElementById('projects-container');
-    const certificatesContainer = document.getElementById('certificates-container');
-    
-    addButton.addEventListener('click', () => {
-      addModal.style.display = 'block';
-    });
-    
-    closeAddModal.addEventListener('click', () => {
-      addModal.style.display = 'none';
-    });
-    
-    window.addEventListener('click', (e) => {
-      if (e.target === addModal) {
-        addModal.style.display = 'none';
-      }
-    });
-    
-    addTypeBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const addType = btn.getAttribute('data-add-type');
-        
-        // Remove active class from all buttons
-        addTypeBtns.forEach(btn => btn.classList.remove('active'));
-        
-        // Add active class to clicked button
-        btn.classList.add('active');
-        
-        // Show/hide form fields
-        addProjectFields.style.display = 'none';
-        addCertificateFields.style.display = 'none';
-        addSkillFields.style.display = 'none';
-        
-        // Update modal title
-        addModalTitle.textContent = `Add New ${addType.charAt(0).toUpperCase() + addType.slice(1)}`;
-        
-        // Show relevant fields
-        if (addType === 'project') {
-          addProjectFields.style.display = 'block';
-        } else if (addType === 'certificate') {
-          addCertificateFields.style.display = 'block';
-        } else if (addType === 'skill') {
-          addSkillFields.style.display = 'block';
-        }
-      });
-    });
-    
-    // Form submission for adding new items
-    addForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      
-      const activeTab = document.querySelector('[data-add-type].active').getAttribute('data-add-type');
-      
-      if (activeTab === 'project') {
-        addNewProject();
-      } else if (activeTab === 'certificate') {
-        addNewCertificate();
-      } else if (activeTab === 'skill') {
-        addNewSkill();
-      }
-      
-      addModal.style.display = 'none';
-      addForm.reset();
-    });
-    
-    function addNewProject() {
-      const title = document.getElementById('project-title').value;
-      const description = document.getElementById('project-description').value;
-      const image = document.getElementById('project-image').value;
-      const demo = document.getElementById('project-demo').value;
-      
-      const projectItem = document.createElement('div');
-      projectItem.className = 'portfolio-item';
-      projectItem.innerHTML = `
-        <img src="${image || 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'}" alt="${title}">
-        <div class="hover-message">Click to view details</div>
-        <div class="portfolio-content">
-          <h3>${title}</h3>
-          <p>${description}</p>
-          <button class="btn" style="padding: 8px 15px; font-size: 0.9rem;">Live Demo</button>
-        </div>
-      `;
-      
-      projectsContainer.appendChild(projectItem);
-      
-      // Add click event for demo button
-      const demoBtn = projectItem.querySelector('.btn');
-      demoBtn.addEventListener('click', () => {
-        if (demo) window.open(demo, '_blank');
-      });
-    }
-    
-    function addNewCertificate() {
-      const title = document.getElementById('certificate-title').value;
-      const image = document.getElementById('certificate-image').value;
-      const category = document.getElementById('certificate-category').value;
-      
-      const certItem = document.createElement('div');
-      certItem.className = 'certificate-item';
-      certItem.setAttribute('data-cert', category);
-      certItem.innerHTML = `
-        <img src="${image || 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80'}" alt="${title}">
-        <div class="cert-title">${title}</div>
-      `;
-      
-      certificatesContainer.appendChild(certItem);
-      
-      // Add click event for certificate
-      certItem.addEventListener('click', () => {
-        const img = certItem.querySelector('img');
-        
-        viewerImage.src = img.src;
-        certViewerTitle.textContent = title;
-        
-        // Update skills from input
-        const skillsInput = document.getElementById('certificate-skills').value;
-        const skills = skillsInput.split(',').map(skill => skill.trim());
-        
-        certSkills.innerHTML = '';
-        skills.forEach(skill => {
-          if (skill) {
-            const span = document.createElement('span');
-            span.textContent = skill;
-            certSkills.appendChild(span);
-          }
-        });
-        
-        certificateViewer.classList.add('active');
-      });
-    }
-    
-    function addNewSkill() {
-      const name = document.getElementById('skill-name').value;
-      const percent = document.getElementById('skill-percent').value;
-      const category = document.getElementById('skill-category').value;
-      const description = document.getElementById('skill-description').value;
-      const icon = document.getElementById('skill-icon').value;
-      
-      // Find the relevant category section
-      let categorySection;
-      if (category === 'programming') {
-        categorySection = document.querySelectorAll('.skill-category')[0];
-      } else if (category === 'databases') {
-        categorySection = document.querySelectorAll('.skill-category')[1];
-      } else if (category === 'tools') {
-        categorySection = document.querySelectorAll('.skill-category')[2];
-      }
-      
-      if (categorySection) {
-        const skillItem = document.createElement('div');
-        skillItem.className = 'skill-item';
-        skillItem.innerHTML = `
-          <div class="skill-header">
-            <div class="skill-icon">
-              <img src="${icon || 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg'}" alt="${name}">
-            </div>
-            <div class="skill-name">${name}</div>
-            <div class="skill-percent">${percent}%</div>
-          </div>
-          <div class="progress-bar">
-            <div class="progress-fill" style="width: ${percent}%"></div>
-          </div>
-          <div class="skill-description">${description}</div>
-        `;
-        
-        categorySection.appendChild(skillItem);
-      }
-    }
-    
     // Edit modal functionality
     const editButton = document.getElementById('edit-button');
     const editModal = document.getElementById('edit-modal');
     const closeModal = document.getElementById('close-modal');
     const editForm = document.getElementById('edit-form');
+    const editSectionBtns = document.querySelectorAll('.edit-section-btn');
+    const editSections = document.querySelectorAll('.edit-section');
     
     editButton.addEventListener('click', () => {
       const password = prompt("Enter password to edit:");
       if (password === "Ironman") {
         editModal.style.display = 'block';
+        loadEditData();
       } else {
         alert("Incorrect password!");
       }
@@ -1737,12 +1557,385 @@
       }
     });
     
+    // Edit section navigation
+    editSectionBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const section = btn.getAttribute('data-section');
+        
+        // Remove active class from all buttons and sections
+        editSectionBtns.forEach(btn => btn.classList.remove('active'));
+        editSections.forEach(sec => sec.classList.remove('active'));
+        
+        // Add active class to clicked button and corresponding section
+        btn.classList.add('active');
+        document.getElementById(`edit-${section}`).classList.add('active');
+      });
+    });
+    
+    // File upload preview
+    document.getElementById('edit-profile-image').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('profile-image-preview').src = e.target.result;
+          document.getElementById('profile-image-preview').style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+    
+    document.getElementById('edit-header-bg').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('header-bg-preview').src = e.target.result;
+          document.getElementById('header-bg-preview').style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+    
+    // Load data into edit form
+    function loadEditData() {
+      // Load navigation links
+      const navLinksContainer = document.getElementById('nav-links-container');
+      navLinksContainer.innerHTML = '';
+      document.querySelectorAll('nav a').forEach(link => {
+        const linkId = link.getAttribute('id') || `nav-${Math.random().toString(36).substr(2, 9)}`;
+        link.setAttribute('id', linkId);
+        
+        const linkDiv = document.createElement('div');
+        linkDiv.className = 'form-group';
+        linkDiv.innerHTML = `
+          <label>Navigation Link</label>
+          <div style="display: flex; gap: 10px;">
+            <input type="text" class="nav-link-text" value="${link.textContent}" placeholder="Link Text" style="flex: 1;">
+            <input type="text" class="nav-link-href" value="${link.getAttribute('href')}" placeholder="Link URL" style="flex: 1;">
+            <button type="button" class="btn" onclick="this.parentElement.parentElement.remove()" style="padding: 5px 10px;">×</button>
+          </div>
+        `;
+        navLinksContainer.appendChild(linkDiv);
+      });
+      
+      // Load projects
+      const projectsContainer = document.getElementById('projects-edit-container');
+      projectsContainer.innerHTML = '';
+      document.querySelectorAll('.portfolio-item').forEach(project => {
+        const projectId = project.getAttribute('data-project-id');
+        const title = project.querySelector('h3').textContent;
+        const description = project.querySelector('p').textContent;
+        const image = project.querySelector('img').src;
+        const demoUrl = project.querySelector('.project-demo-btn').getAttribute('data-demo-url');
+        
+        const projectDiv = document.createElement('div');
+        projectDiv.className = 'form-group';
+        projectDiv.innerHTML = `
+          <label>Project</label>
+          <input type="text" class="project-title" value="${title}" placeholder="Project Title">
+          <textarea class="project-description" placeholder="Project Description">${description}</textarea>
+          <input type="text" class="project-image" value="${image}" placeholder="Image URL">
+          <input type="file" class="project-image-upload" accept="image/*" style="margin-top: 5px;">
+          <input type="text" class="project-demo" value="${demoUrl}" placeholder="Demo URL">
+          <button type="button" class="btn" onclick="this.parentElement.remove()" style="padding: 5px 10px; margin-top: 5px;">Remove Project</button>
+        `;
+        projectsContainer.appendChild(projectDiv);
+      });
+      
+      // Load certificates
+      const certsContainer = document.getElementById('certificates-edit-container');
+      certsContainer.innerHTML = '';
+      document.querySelectorAll('.certificate-item').forEach(cert => {
+        const certId = cert.getAttribute('data-cert-id');
+        const title = cert.querySelector('.cert-title').textContent;
+        const image = cert.querySelector('img').src;
+        const category = cert.getAttribute('data-cert');
+        
+        const certDiv = document.createElement('div');
+        certDiv.className = 'form-group';
+        certDiv.innerHTML = `
+          <label>Certificate</label>
+          <input type="text" class="cert-title" value="${title}" placeholder="Certificate Title">
+          <input type="text" class="cert-image" value="${image}" placeholder="Image URL">
+          <input type="file" class="cert-image-upload" accept="image/*" style="margin-top: 5px;">
+          <select class="cert-category">
+            <option value="data-analytics" ${category === 'data-analytics' ? 'selected' : ''}>Data Analytics</option>
+            <option value="data-structures" ${category === 'data-structures' ? 'selected' : ''}>Data Structures</option>
+            <option value="genomics" ${category === 'genomics' ? 'selected' : ''}>Genomic Data</option>
+            <option value="mongodb" ${category === 'mongodb' ? 'selected' : ''}>MongoDB</option>
+            <option value="sql" ${category === 'sql' ? 'selected' : ''}>SQL</option>
+          </select>
+          <button type="button" class="btn" onclick="this.parentElement.remove()" style="padding: 5px 10px; margin-top: 5px;">Remove Certificate</button>
+        `;
+        certsContainer.appendChild(certDiv);
+      });
+      
+      // Load skills
+      const skillsContainer = document.getElementById('skills-edit-container');
+      skillsContainer.innerHTML = '';
+      document.querySelectorAll('.skill-item').forEach(skill => {
+        const skillId = skill.getAttribute('data-skill-id');
+        const name = skill.querySelector('.skill-name').textContent;
+        const percent = skill.querySelector('.skill-percent').textContent.replace('%', '');
+        const description = skill.querySelector('.skill-description').textContent;
+        const icon = skill.querySelector('.skill-icon img').src;
+        const category = skill.parentElement.parentElement.getAttribute('data-category');
+        
+        const skillDiv = document.createElement('div');
+        skillDiv.className = 'form-group';
+        skillDiv.innerHTML = `
+          <label>Skill</label>
+          <input type="text" class="skill-name" value="${name}" placeholder="Skill Name">
+          <input type="number" class="skill-percent" value="${percent}" placeholder="Skill Percentage" min="0" max="100">
+          <textarea class="skill-description" placeholder="Skill Description">${description}</textarea>
+          <input type="text" class="skill-icon" value="${icon}" placeholder="Icon URL">
+          <input type="file" class="skill-icon-upload" accept="image/*" style="margin-top: 5px;">
+          <select class="skill-category">
+            <option value="programming" ${category === 'programming' ? 'selected' : ''}>Programming Languages</option>
+            <option value="databases" ${category === 'databases' ? 'selected' : ''}>Databases</option>
+            <option value="tools" ${category === 'tools' ? 'selected' : ''}>Tools & Frameworks</option>
+          </select>
+          <button type="button" class="btn" onclick="this.parentElement.remove()" style="padding: 5px 10px; margin-top: 5px;">Remove Skill</button>
+        `;
+        skillsContainer.appendChild(skillDiv);
+      });
+      
+      // Load experience
+      const expContainer = document.getElementById('experience-edit-container');
+      expContainer.innerHTML = '';
+      document.querySelectorAll('.experience-item').forEach(exp => {
+        const expId = exp.getAttribute('data-exp-id');
+        const title = exp.querySelector('.experience-title').textContent;
+        const date = exp.querySelector('.experience-date').textContent;
+        const company = exp.querySelector('.experience-company').textContent;
+        const description = exp.querySelector('.experience-description').innerHTML;
+        
+        const expDiv = document.createElement('div');
+        expDiv.className = 'form-group';
+        expDiv.innerHTML = `
+          <label>Experience Item</label>
+          <input type="text" class="exp-title" value="${title}" placeholder="Title">
+          <input type="text" class="exp-date" value="${date}" placeholder="Date">
+          <input type="text" class="exp-company" value="${company}" placeholder="Company">
+          <textarea class="exp-description" placeholder="Description">${description}</textarea>
+          <button type="button" class="btn" onclick="this.parentElement.remove()" style="padding: 5px 10px; margin-top: 5px;">Remove Experience</button>
+        `;
+        expContainer.appendChild(expDiv);
+      });
+      
+      // Load footer links
+      const footerLinksContainer = document.getElementById('footer-links-container');
+      footerLinksContainer.innerHTML = '';
+      document.querySelectorAll('.footer-link').forEach(link => {
+        const linkDiv = document.createElement('div');
+        linkDiv.className = 'form-group';
+        linkDiv.innerHTML = `
+          <label>Footer Link</label>
+          <div style="display: flex; gap: 10px;">
+            <input type="text" class="footer-link-text" value="${link.textContent}" placeholder="Link Text" style="flex: 1;">
+            <input type="text" class="footer-link-href" value="${link.getAttribute('href')}" placeholder="Link URL" style="flex: 1;">
+            <button type="button" class="btn" onclick="this.parentElement.parentElement.remove()" style="padding: 5px 10px;">×</button>
+          </div>
+        `;
+        footerLinksContainer.appendChild(linkDiv);
+      });
+      
+      // Load social links
+      const socialLinksContainer = document.getElementById('social-links-container');
+      socialLinksContainer.innerHTML = '';
+      document.querySelectorAll('.social-link').forEach(link => {
+        const icon = link.querySelector('i').className;
+        const text = link.textContent.trim();
+        const url = link.getAttribute('href');
+        
+        const linkDiv = document.createElement('div');
+        linkDiv.className = 'form-group';
+        linkDiv.innerHTML = `
+          <label>Social Link</label>
+          <div style="display: flex; gap: 10px;">
+            <input type="text" class="social-link-icon" value="${icon}" placeholder="Icon Class" style="flex: 1;">
+            <input type="text" class="social-link-text" value="${text}" placeholder="Link Text" style="flex: 1;">
+            <input type="text" class="social-link-url" value="${url}" placeholder="Link URL" style="flex: 1;">
+            <button type="button" class="btn" onclick="this.parentElement.parentElement.remove()" style="padding: 5px 10px;">×</button>
+          </div>
+        `;
+        socialLinksContainer.appendChild(linkDiv);
+      });
+    }
+    
+    // Add navigation link
+    document.getElementById('add-nav-link').addEventListener('click', () => {
+      const navLinksContainer = document.getElementById('nav-links-container');
+      const linkDiv = document.createElement('div');
+      linkDiv.className = 'form-group';
+      linkDiv.innerHTML = `
+        <label>Navigation Link</label>
+        <div style="display: flex; gap: 10px;">
+          <input type="text" class="nav-link-text" placeholder="Link Text" style="flex: 1;">
+          <input type="text" class="nav-link-href" placeholder="Link URL" style="flex: 1;">
+          <button type="button" class="btn" onclick="this.parentElement.parentElement.remove()" style="padding: 5px 10px;">×</button>
+        </div>
+      `;
+      navLinksContainer.appendChild(linkDiv);
+    });
+    
+    // Add project
+    document.getElementById('add-project-btn').addEventListener('click', () => {
+      const projectsContainer = document.getElementById('projects-edit-container');
+      const projectDiv = document.createElement('div');
+      projectDiv.className = 'form-group';
+      projectDiv.innerHTML = `
+        <label>Project</label>
+        <input type="text" class="project-title" placeholder="Project Title">
+        <textarea class="project-description" placeholder="Project Description"></textarea>
+        <input type="text" class="project-image" placeholder="Image URL">
+        <input type="file" class="project-image-upload" accept="image/*" style="margin-top: 5px;">
+        <input type="text" class="project-demo" placeholder="Demo URL">
+        <button type="button" class="btn" onclick="this.parentElement.remove()" style="padding: 5px 10px; margin-top: 5px;">Remove Project</button>
+      `;
+      projectsContainer.appendChild(projectDiv);
+    });
+    
+    // Add certificate
+    document.getElementById('add-certificate-btn').addEventListener('click', () => {
+      const certsContainer = document.getElementById('certificates-edit-container');
+      const certDiv = document.createElement('div');
+      certDiv.className = 'form-group';
+      certDiv.innerHTML = `
+        <label>Certificate</label>
+        <input type="text" class="cert-title" placeholder="Certificate Title">
+        <input type="text" class="cert-image" placeholder="Image URL">
+        <input type="file" class="cert-image-upload" accept="image/*" style="margin-top: 5px;">
+        <select class="cert-category">
+          <option value="data-analytics">Data Analytics</option>
+          <option value="data-structures">Data Structures</option>
+          <option value="genomics">Genomic Data</option>
+          <option value="mongodb">MongoDB</option>
+          <option value="sql">SQL</option>
+        </select>
+        <button type="button" class="btn" onclick="this.parentElement.remove()" style="padding: 5px 10px; margin-top: 5px;">Remove Certificate</button>
+      `;
+      certsContainer.appendChild(certDiv);
+    });
+    
+    // Add skill
+    document.getElementById('add-skill-btn').addEventListener('click', () => {
+      const skillsContainer = document.getElementById('skills-edit-container');
+      const skillDiv = document.createElement('div');
+      skillDiv.className = 'form-group';
+      skillDiv.innerHTML = `
+        <label>Skill</label>
+        <input type="text" class="skill-name" placeholder="Skill Name">
+        <input type="number" class="skill-percent" placeholder="Skill Percentage" min="0" max="100">
+        <textarea class="skill-description" placeholder="Skill Description"></textarea>
+        <input type="text" class="skill-icon" placeholder="Icon URL">
+        <input type="file" class="skill-icon-upload" accept="image/*" style="margin-top: 5px;">
+        <select class="skill-category">
+          <option value="programming">Programming Languages</option>
+          <option value="databases">Databases</option>
+          <option value="tools">Tools & Frameworks</option>
+        </select>
+        <button type="button" class="btn" onclick="this.parentElement.remove()" style="padding: 5px 10px; margin-top: 5px;">Remove Skill</button>
+      `;
+      skillsContainer.appendChild(skillDiv);
+    });
+    
+    // Add experience
+    document.getElementById('add-experience-btn').addEventListener('click', () => {
+      const expContainer = document.getElementById('experience-edit-container');
+      const expDiv = document.createElement('div');
+      expDiv.className = 'form-group';
+      expDiv.innerHTML = `
+        <label>Experience Item</label>
+        <input type="text" class="exp-title" placeholder="Title">
+        <input type="text" class="exp-date" placeholder="Date">
+        <input type="text" class="exp-company" placeholder="Company">
+        <textarea class="exp-description" placeholder="Description"></textarea>
+        <button type="button" class="btn" onclick="this.parentElement.remove()" style="padding: 5px 10px; margin-top: 5px;">Remove Experience</button>
+      `;
+      expContainer.appendChild(expDiv);
+    });
+    
+    // Add footer link
+    document.getElementById('add-footer-link').addEventListener('click', () => {
+      const footerLinksContainer = document.getElementById('footer-links-container');
+      const linkDiv = document.createElement('div');
+      linkDiv.className = 'form-group';
+      linkDiv.innerHTML = `
+        <label>Footer Link</label>
+        <div style="display: flex; gap: 10px;">
+          <input type="text" class="footer-link-text" placeholder="Link Text" style="flex: 1;">
+          <input type="text" class="footer-link-href" placeholder="Link URL" style="flex: 1;">
+          <button type="button" class="btn" onclick="this.parentElement.parentElement.remove()" style="padding: 5px 10px;">×</button>
+        </div>
+      `;
+      footerLinksContainer.appendChild(linkDiv);
+    });
+    
+    // Add social link
+    document.getElementById('add-social-link').addEventListener('click', () => {
+      const socialLinksContainer = document.getElementById('social-links-container');
+      const linkDiv = document.createElement('div');
+      linkDiv.className = 'form-group';
+      linkDiv.innerHTML = `
+        <label>Social Link</label>
+        <div style="display: flex; gap: 10px;">
+          <input type="text" class="social-link-icon" placeholder="Icon Class" style="flex: 1;">
+          <input type="text" class="social-link-text" placeholder="Link Text" style="flex: 1;">
+          <input type="text" class="social-link-url" placeholder="Link URL" style="flex: 1;">
+          <button type="button" class="btn" onclick="this.parentElement.parentElement.remove()" style="padding: 5px 10px;">×</button>
+        </div>
+      `;
+      socialLinksContainer.appendChild(linkDiv);
+    });
+    
+    // Add certificate category
+    document.getElementById('add-cert-category').addEventListener('click', () => {
+      const categoryName = prompt("Enter new certificate category name:");
+      if (categoryName) {
+        // In a real app, you would add this to the certificate category dropdowns
+        alert(`Category "${categoryName}" added. You'll need to refresh to see it in dropdowns.`);
+      }
+    });
+    
+    // Add skill category
+    document.getElementById('add-skill-category').addEventListener('click', () => {
+      const categoryName = prompt("Enter new skill category name:");
+      if (categoryName) {
+        // In a real app, you would add this to the skill category dropdowns
+        alert(`Category "${categoryName}" added. You'll need to refresh to see it in dropdowns.`);
+      }
+    });
+    
     // Form submission for editing content
     editForm.addEventListener('submit', (e) => {
       e.preventDefault();
       
-      // Update all editable elements
+      // Update general settings
+      document.body.style.background = document.getElementById('edit-bg-color').value;
+      document.documentElement.style.setProperty('--accent-color', document.getElementById('edit-accent-color').value);
+      document.body.style.fontFamily = document.getElementById('edit-font-family').value;
+      
+      // Update header
       document.getElementById('logo').textContent = document.getElementById('edit-logo').value;
+      
+      // Update navigation links
+      const navLinksContainer = document.getElementById('nav-links');
+      navLinksContainer.innerHTML = '';
+      document.querySelectorAll('#nav-links-container .form-group').forEach(linkDiv => {
+        const text = linkDiv.querySelector('.nav-link-text').value;
+        const href = linkDiv.querySelector('.nav-link-href').value;
+        if (text && href) {
+          const link = document.createElement('a');
+          link.className = 'nav-link';
+          link.href = href;
+          link.textContent = text;
+          navLinksContainer.appendChild(link);
+        }
+      });
+      
+      // Update hero section
       document.getElementById('greeting').textContent = document.getElementById('edit-greeting').value;
       document.getElementById('name').textContent = document.getElementById('edit-name').value;
       document.getElementById('title').textContent = document.getElementById('edit-title').value;
@@ -1769,21 +1962,352 @@
       document.getElementById('linkedin-link').href = document.getElementById('edit-linkedin').value;
       document.getElementById('coursera-link').href = document.getElementById('edit-coursera').value;
       
-      // Update showcase
-      document.getElementById('showcase-title').textContent = document.getElementById('edit-showcase-title').value;
-      document.getElementById('showcase-description').textContent = document.getElementById('edit-showcase-desc').value;
+      // Update profile image
+      const profileImageInput = document.getElementById('edit-profile-image');
+      if (profileImageInput.files.length > 0) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('profile-image').src = e.target.result;
+        };
+        reader.readAsDataURL(profileImageInput.files[0]);
+      } else if (document.getElementById('profile-image-preview').style.display === 'block') {
+        document.getElementById('profile-image').src = document.getElementById('profile-image-preview').src;
+      }
+      
+      // Update projects
+      const projectsContainer = document.getElementById('projects-container');
+      projectsContainer.innerHTML = '';
+      let projectId = 1;
+      document.querySelectorAll('#projects-edit-container .form-group').forEach(projectDiv => {
+        const title = projectDiv.querySelector('.project-title').value;
+        const description = projectDiv.querySelector('.project-description').value;
+        let image = projectDiv.querySelector('.project-image').value;
+        const demoUrl = projectDiv.querySelector('.project-demo').value;
+        
+        // Check for uploaded image
+        const imageUpload = projectDiv.querySelector('.project-image-upload');
+        if (imageUpload.files.length > 0) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            image = e.target.result;
+            createProjectElement(projectId, title, description, image, demoUrl);
+          };
+          reader.readAsDataURL(imageUpload.files[0]);
+        } else {
+          createProjectElement(projectId, title, description, image, demoUrl);
+        }
+        
+        projectId++;
+      });
+      
+      function createProjectElement(id, title, description, image, demoUrl) {
+        const projectItem = document.createElement('div');
+        projectItem.className = 'portfolio-item';
+        projectItem.setAttribute('data-project-id', id);
+        projectItem.innerHTML = `
+          <img src="${image || 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'}" alt="${title}">
+          <div class="hover-message">Click to view details</div>
+          <div class="portfolio-content">
+            <h3>${title}</h3>
+            <p>${description}</p>
+            <button class="btn project-demo-btn" data-demo-url="${demoUrl || '#'}">Live Demo</button>
+          </div>
+        `;
+        projectsContainer.appendChild(projectItem);
+        
+        // Add click event for demo button
+        projectItem.querySelector('.project-demo-btn').addEventListener('click', function() {
+          if (demoUrl) window.open(demoUrl, '_blank');
+        });
+      }
+      
+      // Update certificates
+      const certsContainer = document.getElementById('certificates-container');
+      certsContainer.innerHTML = '';
+      let certId = 1;
+      document.querySelectorAll('#certificates-edit-container .form-group').forEach(certDiv => {
+        const title = certDiv.querySelector('.cert-title').value;
+        let image = certDiv.querySelector('.cert-image').value;
+        const category = certDiv.querySelector('.cert-category').value;
+        
+        // Check for uploaded image
+        const imageUpload = certDiv.querySelector('.cert-image-upload');
+        if (imageUpload.files.length > 0) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            image = e.target.result;
+            createCertElement(certId, title, image, category);
+          };
+          reader.readAsDataURL(imageUpload.files[0]);
+        } else {
+          createCertElement(certId, title, image, category);
+        }
+        
+        certId++;
+      });
+      
+      function createCertElement(id, title, image, category) {
+        const certItem = document.createElement('div');
+        certItem.className = 'certificate-item';
+        certItem.setAttribute('data-cert-id', id);
+        certItem.setAttribute('data-cert', category);
+        certItem.innerHTML = `
+          <img src="${image || 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80'}" alt="${title}">
+          <div class="cert-title">${title}</div>
+        `;
+        certsContainer.appendChild(certItem);
+        
+        // Add click event for certificate
+        certItem.addEventListener('click', function() {
+          const img = this.querySelector('img');
+          const title = this.querySelector('.cert-title').textContent;
+          
+          viewerImage.src = img.src;
+          certViewerTitle.textContent = title;
+          
+          // Update skills (this would be dynamic in a real app)
+          certSkills.innerHTML = '';
+          const skills = ['Python', 'Data Analysis', 'Machine Learning']; // Default skills
+          skills.forEach(skill => {
+            const span = document.createElement('span');
+            span.textContent = skill;
+            certSkills.appendChild(span);
+          });
+          
+          certificateViewer.classList.add('active');
+        });
+      }
+      
+      // Update skills
+      const skillsEditContainer = document.getElementById('skills-container');
+      skillsEditContainer.innerHTML = '';
+      
+      // Group skills by category
+      const skillCategories = {};
+      document.querySelectorAll('#skills-edit-container .form-group').forEach(skillDiv => {
+        const name = skillDiv.querySelector('.skill-name').value;
+        const percent = skillDiv.querySelector('.skill-percent').value;
+        const description = skillDiv.querySelector('.skill-description').value;
+        let icon = skillDiv.querySelector('.skill-icon').value;
+        const category = skillDiv.querySelector('.skill-category').value;
+        
+        // Check for uploaded icon
+        const iconUpload = skillDiv.querySelector('.skill-icon-upload');
+        if (iconUpload.files.length > 0) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            icon = e.target.result;
+            addSkillToCategory(category, name, percent, description, icon);
+          };
+          reader.readAsDataURL(iconUpload.files[0]);
+        } else {
+          addSkillToCategory(category, name, percent, description, icon);
+        }
+      });
+      
+      function addSkillToCategory(category, name, percent, description, icon) {
+        if (!skillCategories[category]) {
+          skillCategories[category] = [];
+        }
+        skillCategories[category].push({ name, percent, description, icon });
+      }
+      
+      // Create skill categories and items
+      for (const [category, skills] of Object.entries(skillCategories)) {
+        const categoryDiv = document.createElement('div');
+        categoryDiv.className = 'skill-category';
+        categoryDiv.setAttribute('data-category', category);
+        
+        const categoryTitle = document.createElement('h3');
+        categoryTitle.textContent = category.charAt(0).toUpperCase() + category.slice(1).replace('-', ' ');
+        categoryDiv.appendChild(categoryTitle);
+        
+        skills.forEach(skill => {
+          const skillItem = document.createElement('div');
+          skillItem.className = 'skill-item';
+          
+          skillItem.innerHTML = `
+            <div class="skill-header">
+              <div class="skill-icon">
+                <img src="${skill.icon || 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg'}" alt="${skill.name}">
+              </div>
+              <div class="skill-name">${skill.name}</div>
+              <div class="skill-percent">${skill.percent}%</div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: ${skill.percent}%"></div>
+            </div>
+            <div class="skill-description">${skill.description}</div>
+          `;
+          
+          categoryDiv.appendChild(skillItem);
+        });
+        
+        skillsEditContainer.appendChild(categoryDiv);
+      }
+      
+      // Update experience
+      const expContainer = document.querySelector('.experience-section');
+      expContainer.innerHTML = `
+        <h2 style="text-align: center; color: #f72585; font-size: 2.5rem; margin-bottom: 40px;">Professional Experience</h2>
+      `;
+      
+      let expId = 1;
+      document.querySelectorAll('#experience-edit-container .form-group').forEach(expDiv => {
+        const title = expDiv.querySelector('.exp-title').value;
+        const date = expDiv.querySelector('.exp-date').value;
+        const company = expDiv.querySelector('.exp-company').value;
+        const description = expDiv.querySelector('.exp-description').value;
+        
+        const expItem = document.createElement('div');
+        expItem.className = 'experience-item';
+        expItem.setAttribute('data-exp-id', expId);
+        expItem.innerHTML = `
+          <div class="experience-header">
+            <div class="experience-title">${title}</div>
+            <div class="experience-date">${date}</div>
+          </div>
+          <div class="experience-company">${company}</div>
+          <div class="experience-description">${description}</div>
+        `;
+        expContainer.appendChild(expItem);
+        expId++;
+      });
       
       // Update footer
       document.getElementById('footer-email').textContent = document.getElementById('edit-footer-email').value;
       document.getElementById('footer-phone').textContent = document.getElementById('edit-footer-phone').value;
       
-      // Update profile image
-      document.getElementById('profile-image').src = document.getElementById('edit-profile-image').value;
+      // Update footer links
+      const footerLinksContainer = document.querySelector('.footer-col:nth-child(2)');
+      footerLinksContainer.innerHTML = '<h4>Quick Links</h4>';
+      document.querySelectorAll('#footer-links-container .form-group').forEach(linkDiv => {
+        const text = linkDiv.querySelector('.footer-link-text').value;
+        const href = linkDiv.querySelector('.footer-link-href').value;
+        if (text && href) {
+          const link = document.createElement('a');
+          link.className = 'footer-link';
+          link.href = href;
+          link.textContent = text;
+          footerLinksContainer.appendChild(link);
+        }
+      });
+      
+      // Update social links
+      const socialLinksContainer = document.querySelector('.footer-col:nth-child(3)');
+      socialLinksContainer.innerHTML = '<h4>Follow Me</h4>';
+      document.querySelectorAll('#social-links-container .form-group').forEach(linkDiv => {
+        const icon = linkDiv.querySelector('.social-link-icon').value;
+        const text = linkDiv.querySelector('.social-link-text').value;
+        const url = linkDiv.querySelector('.social-link-url').value;
+        if (icon && text && url) {
+          const link = document.createElement('a');
+          link.className = 'social-link';
+          link.href = url;
+          link.target = '_blank';
+          link.innerHTML = `<i class="${icon}"></i> ${text}`;
+          socialLinksContainer.appendChild(link);
+        }
+      });
+      
+      // Update footer text
+      const footerText = document.getElementById('edit-footer-text').value.split('\n');
+      const footerBottom = document.querySelector('.footer-bottom');
+      footerBottom.innerHTML = '';
+      footerText.forEach(line => {
+        const p = document.createElement('p');
+        p.textContent = line;
+        footerBottom.appendChild(p);
+      });
       
       // Close modal
       editModal.style.display = 'none';
       alert('Changes saved successfully!');
+      
+      // Reinitialize event listeners
+      initEventListeners();
     });
+    
+    function initEventListeners() {
+      // Reinitialize tab functionality
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const tabId = btn.getAttribute('data-tab');
+          
+          // Remove active class from all buttons and contents
+          tabBtns.forEach(btn => btn.classList.remove('active'));
+          tabContents.forEach(content => content.classList.remove('active'));
+          
+          // Add active class to clicked button and corresponding content
+          btn.classList.add('active');
+          document.getElementById(`${tabId}-tab`).classList.add('active');
+        });
+      });
+      
+      // Reinitialize certificate tab functionality
+      certTabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const certTab = btn.getAttribute('data-cert-tab');
+          
+          // Remove active class from all buttons
+          certTabBtns.forEach(btn => btn.classList.remove('active'));
+          
+          // Add active class to clicked button
+          btn.classList.add('active');
+          
+          // Show/hide certificate items
+          document.querySelectorAll('.certificate-item').forEach(item => {
+            if (certTab === 'all' || item.getAttribute('data-cert') === certTab) {
+              item.style.display = 'block';
+            } else {
+              item.style.display = 'none';
+            }
+          });
+        });
+      });
+      
+      // Reinitialize certificate viewer
+      document.querySelectorAll('.certificate-item').forEach(item => {
+        item.addEventListener('click', function() {
+          const img = this.querySelector('img');
+          const title = this.querySelector('.cert-title').textContent;
+          
+          // Get all visible certificates
+          visibleCertificates.length = 0;
+          document.querySelectorAll('.certificate-item[style="display: block;"], .certificate-item:not([style])').forEach(visibleItem => {
+            visibleCertificates.push(visibleItem);
+          });
+          
+          // Find the index of the clicked certificate in visible certificates
+          currentCertIndex = Array.from(visibleCertificates).indexOf(this);
+          
+          // Update viewer
+          viewerImage.src = img.src;
+          certViewerTitle.textContent = title;
+          
+          // Update skills (this would be dynamic in a real app)
+          certSkills.innerHTML = '';
+          const skills = ['Python', 'Data Analysis', 'Machine Learning']; // Default skills
+          skills.forEach(skill => {
+            const span = document.createElement('span');
+            span.textContent = skill;
+            certSkills.appendChild(span);
+          });
+          
+          certificateViewer.classList.add('active');
+        });
+      });
+      
+      // Reinitialize project demo buttons
+      document.querySelectorAll('.project-demo-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const demoUrl = this.getAttribute('data-demo-url');
+          if (demoUrl && demoUrl !== '#') {
+            window.open(demoUrl, '_blank');
+          }
+        });
+      });
+    }
     
     // Initialize skill percentages animation
     document.querySelectorAll('.progress-fill').forEach(fill => {
@@ -1793,6 +2317,9 @@
         fill.style.width = width;
       }, 100);
     });
+    
+    // Initialize event listeners
+    initEventListeners();
   </script>
 </body>
 </html>
